@@ -2,8 +2,18 @@
     <string name="app_name">EDIOS</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="action_feedback">feedback</string>
+    <string name="nav_create_event">Create Event</string>
+    <string name="nav_my_events">My Events</string>
+    <string name="nav_all_services">All Services</string>
+    <string name="nav_all_events">All Events</string>
+    <string name="nav_settings">Setting</string>
+    <string name="content_description_for_add_new_events_imagebutton">Add New Events</string>
+    <string name="title_activity_create_event">create_event</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="IF">IF</string>
+
 </resources>
