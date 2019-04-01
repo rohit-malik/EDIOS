@@ -1,5 +1,5 @@
 package com.example.edios;
 
-public class Event_Time extends Event {
+public class EventTime extends Event {
 
 }
