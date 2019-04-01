@@ -2,11 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-<<<<<<< HEAD
-    <value-preview-text-wrapping value="true" />
-=======
     <value-preview-text-wrapping value="false" />
->>>>>>> 98265878a4644942d6e534277ff98ec745233af2
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -35,12 +31,6 @@
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
   </component>
-<<<<<<< HEAD
-  <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/app/src/main/java/com/example/edios/tables.sql" connection-id="virtual-sqlite-connection" session-id="MAIN" current-schema="" />
-  </component>
-=======
->>>>>>> 98265878a4644942d6e534277ff98ec745233af2
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
     <execution-history>
