@@ -11,9 +11,15 @@
     <string name="nav_all_events">All Events</string>
     <string name="nav_settings">Setting</string>
     <string name="content_description_for_add_new_events_imagebutton">Add New Events</string>
-    <string name="title_activity_create_event">create_event</string>
+    <string name="title_activity_create_event">Create Event</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="IF">IF</string>
+    <string name="then">THEN</string>
+    <string name="save">SAVE</string>
+    <string name="select">Select</string>
+    <string name="Cancel">to_cancel</string>
+    <string name="textview">TextView</string>
+    <string name="Content_Description_cancel_Button">cancel button to remove the seleced</string>
 
 </resources>
