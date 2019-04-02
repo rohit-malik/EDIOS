@@ -6,5 +6,9 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="nav_header_text_size_for_EDIOS">60sp</dimen>
-    <dimen name="IF_text_size">30sp</dimen>
+    <dimen name="txt_size_30sp">30sp</dimen>
+    <dimen name="txt_size_40sp">40sp</dimen>
+    <dimen name="margin_30">30dp</dimen>
+    <dimen name="ListView_width_for_If_selected">224dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
 </resources>
