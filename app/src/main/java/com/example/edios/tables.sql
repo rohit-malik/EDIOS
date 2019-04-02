@@ -27,8 +27,7 @@ CREATE TABLE IF NOT EXISTS services (
 );
 
 CREATE TABLE IF NOT EXISTS recipe (
- recipe_id INTEGER PRIMARY KEY autoincrement NOT null,
- log_id INTEGER NOT NULL,
+ recipe_id INTEGER PRIMARY KEY autoincrement NOT NULL,
  event_list TEXT,
  service_list TEXT
 );
