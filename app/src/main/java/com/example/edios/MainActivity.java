@@ -3,8 +3,6 @@ package com.example.edios;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -85,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if(id == R.id.nav_create_event_id){
-            Intent intent = new Intent(this,create_event.class);
+            Intent intent = new Intent(this, CreateEventActivity.class);
             startActivity(intent);
         }
 
@@ -118,7 +115,7 @@ public class MainActivity extends AppCompatActivity
         Add_New_Events.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,create_event.class);
+                Intent intent = new Intent(context, CreateEventActivity.class);
                 startActivity(intent);
             }
         });

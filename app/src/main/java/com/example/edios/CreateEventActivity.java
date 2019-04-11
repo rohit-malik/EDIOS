@@ -27,7 +27,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class create_event extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CreateEventActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     int count_if_selection = 0;
@@ -73,10 +73,10 @@ public class create_event extends AppCompatActivity implements NavigationView.On
         ListView_If_Selected = findViewById(R.id.ListView_for_if_selected);
         ListView_Then_Selected = findViewById(R.id.ListView_for_then_selected);
 
-        CustomAdapterForIfSelection customAdapterForIfSelection = new CustomAdapterForIfSelection();
+        CustomAdapterForIfSelected customAdapterForIfSelection = new CustomAdapterForIfSelected();
         ListView_If_Selected.setAdapter(customAdapterForIfSelection);
-        CustomAdapterForThenSelection customAdapterForThenSelection = new CustomAdapterForThenSelection();
-        ListView_Then_Selected.setAdapter(customAdapterForThenSelection);
+        CustomAdapterForThenSelected customAdapterForThenSelected = new CustomAdapterForThenSelected();
+        ListView_Then_Selected.setAdapter(customAdapterForThenSelected);
 
 
 
@@ -85,12 +85,12 @@ public class create_event extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 save_state();
-                //Intent intent = new Intent(create_event.this,if_selection.class);
-                //startActivity(intent);
+                Intent intent = new Intent(CreateEventActivity.this,IfSelectionActivity.class);
+                startActivity(intent);
                 //remove the lines below
-                IF_LIST.add("Hello1"+Integer.toString(count_if_selection));
-                count_if_selection++;
-                ((CustomAdapterForIfSelection) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
+                //IF_LIST.add("Hello1"+Integer.toString(count_if_selection));
+                //count_if_selection++;
+                //((CustomAdapterForIfSelected) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
             }
         });
         TextView select_for_then_selection = findViewById(R.id.select_for_then_selection);
@@ -100,12 +100,12 @@ public class create_event extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 if(count_if_selection > 0) {
                     save_state();
-                    //Intent intent = new Intent(create_event.this,then_selection.class);
+                    //Intent intent = new Intent(CreateEventActivity.this,then_selection.class);
                     //startActivity(intent);
                     //remove the following lines
                     THEN_LIST.add("Hello11"+Integer.toString(count_then_selection));
                     count_then_selection++;
-                    ((CustomAdapterForThenSelection) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
+                    ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
                 }
             }
         });
@@ -124,7 +124,7 @@ public class create_event extends AppCompatActivity implements NavigationView.On
                     editor.clear();
                     editor.apply();
 
-                    Toast.makeText(create_event.this,"Saved!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateEventActivity.this,"Saved!!",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -138,13 +138,13 @@ public class create_event extends AppCompatActivity implements NavigationView.On
             if (fromWhichActivity.equals("if_selection")){
                 count_if_selection++;
                 IF_LIST.add(intent.getExtras().getString("EVENT_NAME",""));
-                ((CustomAdapterForIfSelection) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
+                ((CustomAdapterForIfSelected) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
                 save_state();
             }
             else if(fromWhichActivity.equals("then_selection")){
                 count_then_selection++;
                 THEN_LIST.add(intent.getExtras().getString("SERVICE_NAME",""));
-                ((CustomAdapterForThenSelection) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
+                ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
                 save_state();
             }
         }
@@ -239,7 +239,7 @@ public class create_event extends AppCompatActivity implements NavigationView.On
     }
 
 
-    class  CustomAdapterForIfSelection extends BaseAdapter{
+    class CustomAdapterForIfSelected extends BaseAdapter{
 
         @Override
         public int getCount() {
@@ -268,7 +268,7 @@ public class create_event extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    class  CustomAdapterForThenSelection extends BaseAdapter{
+    class CustomAdapterForThenSelected extends BaseAdapter{
 
         @Override
         public int getCount() {
@@ -304,7 +304,7 @@ public class create_event extends AppCompatActivity implements NavigationView.On
         String text = (String)textView_in_parent_row.getText();
         IF_LIST.remove(text);
         count_if_selection--;
-        ((CustomAdapterForIfSelection) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
+        ((CustomAdapterForIfSelected) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
         save_state();
     }
     public void cancel_then_selected_click(View view){
@@ -314,7 +314,7 @@ public class create_event extends AppCompatActivity implements NavigationView.On
         String text = (String)textView_in_parent_row.getText();
         THEN_LIST.remove(text);
         count_then_selection--;
-        ((CustomAdapterForThenSelection) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
+        ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
         save_state();
     }
 }
