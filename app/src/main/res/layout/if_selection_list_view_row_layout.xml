@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/ListView_width_for_If_selected"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/textView_inside_listView_if_selection"
+        android:layout_width="146dp"
+        android:layout_height="wrap_content"
+        android:text="@string/textview"
+        android:textSize="@dimen/txt_size_30sp"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="2dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton_inside_listView_if_selection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/margin_10dp"
+        app:srcCompat="@drawable/ic_cancel"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="0dp"
+        android:onClick="cancel_if_selected_click"
+        android:contentDescription="@string/content_description_for_add_new_events_imagebutton" />
+
+</RelativeLayout>

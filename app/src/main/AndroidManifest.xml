@@ -13,9 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".create_event"
-            android:label="@string/title_activity_create_event"
+            android:name=".AlarmTestingActivity"
+            android:label="@string/title_activity_alarm_testing"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".IfSelectionActivity"
+            android:label="Select Events"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreateEventActivity"
+            android:label="@string/title_activity_create_event"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -26,6 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".ScheduleService" />
+        <service android:name=".NotifyService" />
     </application>
 
 </manifest>
