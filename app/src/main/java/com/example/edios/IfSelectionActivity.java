@@ -25,7 +25,7 @@ import java.util.TimeZone;
 public class IfSelectionActivity extends AppCompatActivity {
 
 
-    int NumberOfTotalEvents = 2;
+    int NumberOfTotalEvents = 3;
     ListView listViewForIfSelection;
 
     @Override
