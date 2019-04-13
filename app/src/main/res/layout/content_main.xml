@@ -20,6 +20,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/content_description_for_add_new_events_imagebutton" />
+
+    <Button
+        android:id="@+id/checkAlarmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CheckAlarm"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="445dp" />
     <!--
     <TextView
         android:layout_width="wrap_content"
