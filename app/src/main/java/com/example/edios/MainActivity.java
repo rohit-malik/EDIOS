@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity
@@ -110,7 +111,14 @@ public class MainActivity extends AppCompatActivity
         final Context context = this;
 
         ImageButton Add_New_Events = findViewById(R.id.add_new_events_in_content_main);
-
+        Button checkAlarm = findViewById(R.id.checkAlarmButton);
+        checkAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AlarmTestingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Add_New_Events.setOnClickListener(new View.OnClickListener() {
             @Override
