@@ -1,16 +1,23 @@
 package com.example.edios;
 
-import android.content.Context;
+import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -30,14 +37,20 @@ public class IfSelectionActivity extends AppCompatActivity {
         CustomAdapterForIfSelectionActivity customAdapterForIfSelectionActivity = new CustomAdapterForIfSelectionActivity();
         listViewForIfSelection.setAdapter(customAdapterForIfSelectionActivity);
 
+        Button proceed = findViewById(R.id.proceed_btn_in_ifSelectionActivity);
+        proceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Here Save the event selected Event Data in DataBase
+                //Then go back to createEventActivity
+                Intent intent = new Intent(IfSelectionActivity.this,CreateEventActivity.class);
+                intent.putExtra("KEY_EVENT_NAME","D & T");
+                intent.putExtra("FROM_WHICH","IfSelectionActivity");
+                startActivity(intent);
+            }
+        });
+
     }
-
-
-
-
-
-
-
 
 
 
@@ -46,12 +59,23 @@ public class IfSelectionActivity extends AppCompatActivity {
 
         @Override
         public int getViewTypeCount() {
-            return 2;
+            return 3;
         }
 
         @Override
         public int getItemViewType(int position) {
-            return (position == this.getCount()-1) ? 0 : 1;
+
+            if(position == 0){
+                return 0;
+            }
+            else if(position == 1){
+                return 1;
+            }
+            else{
+                return 2;
+            }
+
+            //return (position == this.getCount()-1) ? 0 : 1;
         }
 
         @Override
@@ -71,12 +95,45 @@ public class IfSelectionActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
+            Log.d("position",Integer.toString(position));
             int type = getItemViewType(position);
 
             if(view == null){
                 if(type == 0){
                     //Time date row
                     view = getLayoutInflater().inflate(R.layout.row_layout_event_time_date,null);
+
+                    ImageButton description = view.findViewById(R.id.description_time_date);
+                    description.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            final Dialog dialog = new Dialog(IfSelectionActivity.this,android.R.style.Theme_Translucent_NoTitleBar);
+                            dialog.setContentView(R.layout.description_dialog);
+                            Window window = dialog.getWindow();
+
+
+                            if (window != null) {
+                                window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                window.setGravity(Gravity.CENTER);
+                            }
+
+
+                            dialog.show();
+
+
+
+                            dialog.findViewById(R.id.GotIt_btn_in_description_dialog).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                        }
+                    });
+
+
                     String hour[] = new String[25];
                     String minute[] = new String[61];
                     String day[] = new String[32];
@@ -88,8 +145,6 @@ public class IfSelectionActivity extends AppCompatActivity {
                     Spinner spinner_day = view.findViewById(R.id.spinner_day);
                     Spinner spinner_month = view.findViewById(R.id.spinner_month);
                     Spinner spinner_year = view.findViewById(R.id.spinner_year);
-
-                    ImageButton description = view.findViewById(R.id.description_time_date);
 
                     CheckBox checkBox = view.findViewById(R.id.checkBox_time_date);
 
@@ -153,10 +208,39 @@ public class IfSelectionActivity extends AppCompatActivity {
                     spinner_month.setAdapter(adapter_month);
 
 
+
                 }
-                else if(type == 1){
+                else if(type == 1 || type == 2){
                     view = getLayoutInflater().inflate(R.layout.row_layout_missed_call,null);
+
+                    ImageButton description = view.findViewById(R.id.description_missed_calls);
+                    description.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            final Dialog dialog = new Dialog(IfSelectionActivity.this,android.R.style.Theme_Translucent_NoTitleBar);
+                            dialog.setContentView(R.layout.description_dialog);
+                            Window window = dialog.getWindow();
+
+                            if (window != null) {
+                                window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                window.setGravity(Gravity.CENTER);
+                            }
+
+
+                            dialog.show();
+                            TextView txt_description = dialog.findViewById(R.id.txt_description_in_description_dialog);
+                            txt_description.setText(R.string.description_missed_calls);
+                            dialog.findViewById(R.id.GotIt_btn_in_description_dialog).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                        }
+                    });
                 }
+
 
             }
 
