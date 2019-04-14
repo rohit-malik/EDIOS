@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ThenSelectionActivity">
+
+    <ListView
+        android:id="@+id/listView_for_then_selection_activity"
+        android:layout_width="356dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="66dp"
+        android:scrollbars="none" />
+
+
+    <Button
+        android:id="@+id/proceed_btn_in_ThenSelectionActivity"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rounded_corner"
+        android:text="@string/proceed"
+        android:textSize="@dimen/txt_size_30sp" />
+
+
+</RelativeLayout>

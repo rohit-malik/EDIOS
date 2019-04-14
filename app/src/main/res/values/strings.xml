@@ -30,6 +30,8 @@
     <string name="proceed">Proceed</string>
     <string name="description_missed_calls"><![CDATA[This is the description for the row Missed Calls in ifSelectionActivity This is the description for the row Missed Calls in ifSelectionActivity This is the description for the row Missed Calls in ifSelectionActivity]]></string>
     <string name="description_date_time"><![CDATA[This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity]]></string>
+    <string name="description_alarm">This is the description</string>
+    <string name="description_post_http">This is the description</string>
     <string name="ok">Got it!</string>
     <string name="title_activity_alarm_testing">AlarmTestingActivity</string>
 
