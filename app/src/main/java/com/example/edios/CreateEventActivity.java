@@ -98,15 +98,15 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         select_for_then_selection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(count_if_selection > 0) {
+                //if(count_if_selection > 0) {
                     save_state();
-                    //Intent intent = new Intent(CreateEventActivity.this,then_selection.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(CreateEventActivity.this,ThenSelectionActivity.class);
+                    startActivity(intent);
                     //remove the following lines
-                    THEN_LIST.add("Hello11"+Integer.toString(count_then_selection));
-                    count_then_selection++;
-                    ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
-                }
+                    //THEN_LIST.add("Hello11"+Integer.toString(count_then_selection));
+                    //count_then_selection++;
+                    //((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
+                //}
             }
         });
 
