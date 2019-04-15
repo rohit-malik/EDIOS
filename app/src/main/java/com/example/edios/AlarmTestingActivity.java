@@ -126,8 +126,8 @@ public class AlarmTestingActivity extends AppCompatActivity
         // we set the time to midnight (i.e. the first minute of that day)
         Calendar c = Calendar.getInstance();
         c.set(year, month, day);
-        c.set(Calendar.HOUR_OF_DAY, 7);
-        c.set(Calendar.MINUTE, 31);
+        c.set(Calendar.HOUR_OF_DAY, 22);
+        c.set(Calendar.MINUTE, 51);
         c.set(Calendar.SECOND, 0);
         // Ask our service to set an alarm for that date, this activity talks to the client that talks to the service
         scheduleClient.setAlarmForNotification(c);

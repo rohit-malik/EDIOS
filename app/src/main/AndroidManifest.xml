@@ -38,6 +38,7 @@
 
         <service android:name=".ScheduleService" />
         <service android:name=".NotifyService" />
+        <service android:name=".RingtoneLevelService" />
     </application>
 
 </manifest>
