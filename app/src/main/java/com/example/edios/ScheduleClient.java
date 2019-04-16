@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -56,10 +57,17 @@ public class ScheduleClient {
      * Tell our service to set an alarm for the given date
      * @param c a date to set the notification for
      */
-    public void setAlarmForNotification(Calendar c){
-        mBoundService.setAlarm(c);
+    public void setAlarmForNotification(Calendar c,String string){
+        Log.e("Inside Client", "ExecuteServices: " );
+        mBoundService.setAlarm(c,string);
     }
 
+
+
+    public void setRingtoneForNotification(Calendar c, Float f){
+        Log.e("Inside setRingTone", "ExecuteServices: ");
+        mBoundService.setRingtone(c,f);
+    }
 
     /**
      * Tell Our Service to set an missed call service run background

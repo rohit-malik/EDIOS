@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
     public void addListenerOnButtons(){
 
         final Context context = this;
-
+//
         Button checkAlarm = findViewById(R.id.checkAlarmButton);
         checkAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
 
 
 //

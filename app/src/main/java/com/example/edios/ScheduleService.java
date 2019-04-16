@@ -38,10 +38,21 @@ public class ScheduleService extends Service {
     /**
      * Show an alarm for a certain date when the alarm is called it will pop up a notification
      */
-    public void setAlarm(Calendar c) {
+    public void setAlarm(Calendar c,String string) {
         // This starts a new thread to set the alarm
         // You want to push off your tasks onto a new thread to free up the UI to carry on responding
-        new AlarmTask(this, c).run();
+        Log.e("Inside Service", "ExecuteServices: " );
+
+        new AlarmTask(this, c,string).run();
     }
+
+    public void setRingtone(Calendar c,Float f) {
+        // This starts a new thread to set the alarm
+        // You want to push off your tasks onto a new thread to free up the UI to carry on responding
+        Log.e("Inside setRingtone", "ScheduleService: ");
+        new RingtoneTask(this, c,f).run();
+    }
+
+
 
 }

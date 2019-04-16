@@ -5,16 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CreateEventActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,8 +38,8 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
     List<String> IF_LIST = new ArrayList<>();
     List<String> THEN_LIST = new ArrayList<>();
 
-
-
+    Context context;
+    Calendar c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,6 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Menu menuNav = navigationView.getMenu();
@@ -69,6 +69,14 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         for(int i=0; i<count_then_selection; i++){
             THEN_LIST.add(sharedPreferences.getString("THEN_LIST_"+Integer.toString(i),""));
         }
+
+//        context = this;
+//        c = Calendar.getInstance();
+//        c.set(2019, 4, 16);
+//        c.set(Calendar.HOUR_OF_DAY, 10);
+//        c.set(Calendar.MINUTE, 27);
+//        c.set(Calendar.SECOND, 0);
+        //executeRecipe = new ExecuteRecipe(context,c);
 
 
         ListView_If_Selected = findViewById(R.id.ListView_for_if_selected);
@@ -129,8 +137,15 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
-
                     Toast.makeText(CreateEventActivity.this,"Saved!!",Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(context, RecipeExecution.class);
+//                    startActivity(intent);
+
+                    /*
+                    * Depending on Events and Services Specific Services will be Executed.
+                    * */
+
+                    //executeRecipe.ExecuteServices();
                 }
             }
         });
@@ -302,6 +317,8 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
             return view;
         }
     }
+
+
 
     public void cancel_if_selected_click(View view){
         RelativeLayout parent_row = (RelativeLayout) view.getParent();
