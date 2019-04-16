@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -124,14 +125,14 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-//        Button sendData = findViewById(R.id.http);
-//        sendData.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, SendData.class);
-//                startActivity(intent);
-//            }
-//        });
+        Button sendData = findViewById(R.id.http);
+        sendData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RecipeExecution.class);
+                startActivity(intent);
+            }
+        });
 
         ImageButton Add_New_Events = findViewById(R.id.add_new_events_in_content_main);
         Add_New_Events.setOnClickListener(new View.OnClickListener() {
@@ -193,6 +194,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            return true;
+        }
+        return false;
     }
 
 }

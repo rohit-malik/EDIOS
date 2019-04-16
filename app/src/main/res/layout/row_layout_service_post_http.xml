@@ -25,7 +25,7 @@
         app:layout_constraintVertical_bias="0.023" />
 
     <CheckBox
-        android:id="@+id/checkBox_time_date"
+        android:id="@+id/checkBox_post_http"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleX="2"
@@ -40,27 +40,41 @@
 
 
     <EditText
+        android:layout_marginTop="15dp"
         android:id="@+id/input_server_address"
         android:layout_height="50dp"
+        android:paddingStart="@dimen/margin_10dp"
+        android:paddingEnd="5dp"
         android:layout_width="match_parent"
+        android:background="@drawable/rounded_corner_for_edittext"
+        android:lines="2"
+        android:textSize="@dimen/txt_size_20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:hint="Server Address"
+        android:hint="@string/server_address"
         android:inputType="text"/>
 
 
     <EditText
+
+        android:paddingEnd="5dp"
+        android:paddingStart="@dimen/margin_10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/input_text_message"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
+        android:lines="3"
+        android:textSize="@dimen/txt_size_20sp"
+        android:background="@drawable/rounded_corner_for_edittext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_server_address"
-        android:hint="Text Message"
+        android:hint="@string/text_message"
         android:inputType="text"/>
 
 
 
     <ImageButton
+        android:layout_marginTop="20dp"
         android:id="@+id/description_post_http"
         android:layout_width="wrap_content"
         android:layout_height="44dp"

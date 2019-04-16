@@ -11,17 +11,21 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.Calendar;
 
 
 public class ThenSelectionActivity extends AppCompatActivity {
 
-    int NumberOfTotalEvents = 3;
+    int NumberOfTotalServices = 2;
     ListView listViewForThenSelection;
 
     @Override
@@ -37,12 +41,31 @@ public class ThenSelectionActivity extends AppCompatActivity {
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Here Save the event selected Event Data in DataBase
-                //Then go back to createEventActivity
-                Intent intent = new Intent(ThenSelectionActivity.this,CreateEventActivity.class);
-                intent.putExtra("KEY_SERVICE_NAME","Notify");
-                intent.putExtra("KEY_EVENT_NAME","D & T");
-                intent.putExtra("FROM_WHICH","ThenSelectionActivity");
+                int NumberOfSelectedServices = 0;
+
+                Intent intent = new Intent(ThenSelectionActivity.this, CreateEventActivity.class);
+                intent.putExtra("FROM_WHICH", "ThenSelectionActivity");
+
+
+                View view1 = getViewByPosition(0,listViewForThenSelection);
+                CheckBox checkBox1 = view1.findViewById(R.id.checkBox_alarm_notify);
+                if(checkBox1.isChecked()){
+                    NumberOfSelectedServices++;
+
+                    intent.putExtra("KEY_SERVICE_NAME_"+NumberOfSelectedServices, "Alarm");
+
+                }
+                View view2 = getViewByPosition(1,listViewForThenSelection);
+                CheckBox checkBox2 = view2.findViewById(R.id.checkBox_post_http);
+                if(checkBox2.isChecked()){
+                    NumberOfSelectedServices++;
+                    intent.putExtra("KEY_SERVICE_NAME_"+NumberOfSelectedServices,"H Post");
+
+                }
+
+
+                intent.putExtra("NUMBER_OF_SERVICES",NumberOfSelectedServices);
+
                 startActivity(intent);
             }
         });
@@ -56,7 +79,7 @@ public class ThenSelectionActivity extends AppCompatActivity {
 
         @Override
         public int getViewTypeCount() {
-            return 3;
+            return 2;
         }
 
         @Override
@@ -77,7 +100,7 @@ public class ThenSelectionActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return NumberOfTotalEvents;
+            return NumberOfTotalServices;
         }
 
         @Override
@@ -137,7 +160,7 @@ public class ThenSelectionActivity extends AppCompatActivity {
 
 
                 }
-                else if(type == 1 || type == 2){
+                else if(type == 1){
                     view = getLayoutInflater().inflate(R.layout.row_layout_service_post_http,null);
 
                     ImageButton description = view.findViewById(R.id.description_post_http);
@@ -167,16 +190,24 @@ public class ThenSelectionActivity extends AppCompatActivity {
                         }
                     });
 
-                    EditText serverAddressText =  findViewById(R.id.input_server_address);
-                    EditText postMessageText =  findViewById(R.id.input_text_message);
-
-
                 }
 
 
             }
 
             return view;
+        }
+    }
+
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
         }
     }
 }

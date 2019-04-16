@@ -50,7 +50,7 @@ public class ScheduleService extends Service {
         // This starts a new thread to set the alarm
         // You want to push off your tasks onto a new thread to free up the UI to carry on responding
         Log.e("Inside setRingtone", "ScheduleService: ");
-        new RingtoneTask(this, c,f).run();
+        //new RingtoneTask(this, c,f).run();
     }
 
 
