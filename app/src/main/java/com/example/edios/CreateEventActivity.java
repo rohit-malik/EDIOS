@@ -43,16 +43,16 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Menu menuNav = navigationView.getMenu();
         MenuItem create_event_item = menuNav.findItem(R.id.nav_create_event_id);
@@ -100,12 +100,14 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
             public void onClick(View view) {
                 if(count_if_selection > 0) {
                     save_state();
+                    Intent intent = new Intent(CreateEventActivity.this,ThenSelectionActivity.class);
+                    startActivity(intent);
                     //Intent intent = new Intent(CreateEventActivity.this,then_selection.class);
                     //startActivity(intent);
                     //remove the following lines
-                    THEN_LIST.add("Hello11"+Integer.toString(count_then_selection));
-                    count_then_selection++;
-                    ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
+                    //THEN_LIST.add("Hello11"+Integer.toString(count_then_selection));
+                    //count_then_selection++;
+                    //((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
                 }
             }
         });
@@ -141,9 +143,9 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                 ((CustomAdapterForIfSelected) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
                 save_state();
             }
-            else if(fromWhichActivity.equals("then_selection")){
+            else if(fromWhichActivity.equals("ThenSelectionActivity")){
                 count_then_selection++;
-                THEN_LIST.add(intent.getExtras().getString("SERVICE_NAME",""));
+                THEN_LIST.add(intent.getExtras().getString("KEY_SERVICE_NAME",""));
                 ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
                 save_state();
             }
@@ -160,7 +162,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -210,7 +212,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 
         }*/
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -260,7 +262,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.if_selection_list_view_row_layout,null);
-            ImageButton imageButton = view.findViewById(R.id.imageButton_inside_listView_if_selection);
+            ImageButton imageButton = view.findViewById(R.id.CancelButton_inside_listView_if_selection);
             TextView textView = view.findViewById(R.id.textView_inside_listView_if_selection);
 
             textView.setText(IF_LIST.get(i));
@@ -289,7 +291,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.then_selection_list_view_row_layout,null);
-            ImageButton imageButton = view.findViewById(R.id.imageButton_inside_listView_then_selection);
+            ImageButton imageButton = view.findViewById(R.id.CancelButton_inside_listView_then_selection);
             TextView textView = view.findViewById(R.id.textView_inside_listView_then_selection);
 
             textView.setText(THEN_LIST.get(i));
