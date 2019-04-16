@@ -57,17 +57,16 @@ public class ScheduleClient {
      * Tell our service to set an alarm for the given date
      * @param c a date to set the notification for
      */
-    public void setAlarmForNotification(Calendar c,String string){
+    public void setAlarmForNotification(Calendar c){
         Log.e("Inside Client", "ExecuteServices: " );
-        mBoundService.setAlarm(c,string);
+        mBoundService.setAlarm(c);
     }
 
+    public void setRingtoneForNotification(Calendar c){ mBoundService.setRingtone(c);}
 
 
-    public void setRingtoneForNotification(Calendar c, Float f){
-        Log.e("Inside setRingTone", "ExecuteServices: ");
-        mBoundService.setRingtone(c,f);
-    }
+
+
 
     /**
      * Tell Our Service to set an missed call service run background

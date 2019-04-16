@@ -49,7 +49,7 @@ public class RecipeExecution extends AppCompatActivity {
                 c.set(Calendar.SECOND, 0);
                 Intent intent = getIntent();
                 // Ask our service to set an alarm for that date, this activity talks to the client that talks to the service
-                scheduleClient.setAlarmForNotification(c, "Hello");
+                scheduleClient.setAlarmForNotification(c);
             }
         });
 
