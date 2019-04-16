@@ -3,7 +3,6 @@ package com.example.edios;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -179,14 +178,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        IntentFilter intentFilter=new IntentFilter("my.custom.action.tag.fordemo");
-        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        registerReceiver(broadcastReceiver,intentFilter);
+        //IntentFilter intentFilter=new IntentFilter("my.custom.action.tag.fordemo");
+        //intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        //registerReceiver(broadcastReceiver,intentFilter);
     }
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(broadcastReceiver);
+        //unregisterReceiver(broadcastReceiver);
     }
 
 
