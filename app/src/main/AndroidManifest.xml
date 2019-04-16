@@ -12,6 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AllServices"></activity>
+        <activity android:name=".AllEvents" />
+        <activity
+            android:name=".ThenSelectionActivity"
+            android:label="Select Service"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ThenSelectionActivity"
             android:screenOrientation="portrait"

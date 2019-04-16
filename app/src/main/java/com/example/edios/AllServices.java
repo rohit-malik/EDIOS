@@ -17,67 +17,42 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+public class AllServices extends AppCompatActivity {
 
-
-public class ThenSelectionActivity extends AppCompatActivity {
-
-    int NumberOfTotalEvents = 3;
-    ListView listViewForThenSelection;
+    int NumberOfTotalServices = 2;
+    ListView listViewForAllServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_then_selection);
+        setContentView(R.layout.activity_all_services);
 
-        listViewForThenSelection = findViewById(R.id.listView_for_then_selection_activity);
-        CustomAdapterForThenSelectionActivity customAdapterForThenSelectionActivity = new CustomAdapterForThenSelectionActivity();
-        listViewForThenSelection.setAdapter(customAdapterForThenSelectionActivity);
-
-        Button proceed = findViewById(R.id.proceed_btn_in_ThenSelectionActivity);
-        proceed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Here Save the event selected Event Data in DataBase
-                //Then go back to createEventActivity
-                Intent intent = new Intent(ThenSelectionActivity.this,CreateEventActivity.class);
-                intent.putExtra("KEY_SERVICE_NAME","Notify");
-                intent.putExtra("KEY_EVENT_NAME","D & T");
-                intent.putExtra("FROM_WHICH","ThenSelectionActivity");
-                startActivity(intent);
-            }
-        });
+        listViewForAllServices = findViewById(R.id.listView_for_all_services);
+        CustomAdapterForAllServices customAdapterForAllServices = new CustomAdapterForAllServices();
+        listViewForAllServices.setAdapter(customAdapterForAllServices);
 
     }
 
-
-
-
-    class CustomAdapterForThenSelectionActivity extends BaseAdapter{
+    class CustomAdapterForAllServices extends BaseAdapter{
 
         @Override
         public int getViewTypeCount() {
-            return 3;
+            return 2;
         }
 
         @Override
         public int getItemViewType(int position) {
 
-            if(position == 0){
+            if (position == 0) {
                 return 0;
-            }
-            else if(position == 1){
+            } else {
                 return 1;
             }
-            else{
-                return 2;
-            }
-
-            //return (position == this.getCount()-1) ? 0 : 1;
         }
 
         @Override
         public int getCount() {
-            return NumberOfTotalEvents;
+            return NumberOfTotalServices;
         }
 
         @Override
@@ -92,21 +67,21 @@ public class ThenSelectionActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
-            Log.d("position",Integer.toString(position));
+            Log.d("position", Integer.toString(position));
             int type = getItemViewType(position);
 
-            if(view == null){
+            if (view == null) {
 
-                if(type == 0){
+                if (type == 0) {
                     //Time date row
-                    view = getLayoutInflater().inflate(R.layout.row_layout_service_alarm_notify,null);
+                    view = getLayoutInflater().inflate(R.layout.activity_service_alarm_notify, null);
 
-                    ImageButton description = view.findViewById(R.id.description_alarm);
+                    ImageButton description = view.findViewById(R.id.description_service_alarm_notify);
                     description.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
-                            final Dialog dialog = new Dialog(ThenSelectionActivity.this,android.R.style.Theme_Translucent_NoTitleBar);
+                            final Dialog dialog = new Dialog(AllServices.this, android.R.style.Theme_Translucent_NoTitleBar);
                             dialog.setContentView(R.layout.description_dialog);
                             Window window = dialog.getWindow();
 
@@ -129,22 +104,14 @@ public class ThenSelectionActivity extends AppCompatActivity {
 
                         }
                     });
+                } else if (type == 1) {
+                    view = getLayoutInflater().inflate(R.layout.activity_service_post_http,null);
 
-
-                    EditText alarmText =  findViewById(R.id.input_alarm_message);
-
-
-
-
-                }
-                else if(type == 1 || type == 2){
-                    view = getLayoutInflater().inflate(R.layout.row_layout_service_post_http,null);
-
-                    ImageButton description = view.findViewById(R.id.description_post_http);
+                    ImageButton description = view.findViewById(R.id.description_service_post_http);
                     description.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            final Dialog dialog = new Dialog(ThenSelectionActivity.this,android.R.style.Theme_Translucent_NoTitleBar);
+                            final Dialog dialog = new Dialog(AllServices.this,android.R.style.Theme_Translucent_NoTitleBar);
                             dialog.setContentView(R.layout.description_dialog);
                             Window window = dialog.getWindow();
 
@@ -166,14 +133,7 @@ public class ThenSelectionActivity extends AppCompatActivity {
 
                         }
                     });
-
-                    EditText serverAddressText =  findViewById(R.id.input_server_address);
-                    EditText postMessageText =  findViewById(R.id.input_text_message);
-
-
                 }
-
-
             }
 
             return view;
