@@ -20,6 +20,12 @@
             android:name=".SendData"
             android:label="@string/title_activity_send_data"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".AllServices"></activity>
+        <activity android:name=".AllEvents" />
+        <activity
+            android:name=".ThenSelectionActivity"
+            android:label="Select Service"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AlarmTestingActivity"
             android:label="@string/title_activity_alarm_testing"

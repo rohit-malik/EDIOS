@@ -99,15 +99,15 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         select_for_then_selection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(count_if_selection > 0) {
+                //if(count_if_selection > 0) {
                     save_state();
-                    //Intent intent = new Intent(CreateEventActivity.this,then_selection.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(CreateEventActivity.this,ThenSelectionActivity.class);
+                    startActivity(intent);
                     //remove the following lines
-                    THEN_LIST.add("Hello11"+Integer.toString(count_then_selection));
-                    count_then_selection++;
-                    ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
-                }
+                    //THEN_LIST.add("Hello11"+Integer.toString(count_then_selection));
+                    //count_then_selection++;
+                    //((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
+                //}
             }
         });
 
@@ -136,9 +136,9 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         Bundle extras = intent.getExtras();
         if (extras != null){
             String fromWhichActivity = intent.getExtras().getString("FROM_WHICH","");
-            if (fromWhichActivity.equals("if_selection")){
+            if (fromWhichActivity.equals("IfSelectionActivity")){
                 count_if_selection++;
-                IF_LIST.add(intent.getExtras().getString("EVENT_NAME",""));
+                IF_LIST.add(intent.getExtras().getString("KEY_EVENT_NAME",""));
                 ((CustomAdapterForIfSelected) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
                 save_state();
             }
