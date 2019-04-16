@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,7 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class CreateEventActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,10 +46,11 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -86,11 +90,8 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
             public void onClick(View view) {
                 save_state();
                 Intent intent = new Intent(CreateEventActivity.this,IfSelectionActivity.class);
+
                 startActivity(intent);
-                //remove the lines below
-                //IF_LIST.add("Hello1"+Integer.toString(count_if_selection));
-                //count_if_selection++;
-                //((CustomAdapterForIfSelected) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
             }
         });
         TextView select_for_then_selection = findViewById(R.id.select_for_then_selection);
@@ -98,39 +99,33 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         select_for_then_selection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if(count_if_selection > 0) {
-                save_state();
-                Intent intent = new Intent(CreateEventActivity.this, ThenSelectionActivity.class);
-                startActivity(intent);
-                //Intent intent = new Intent(CreateEventActivity.this,then_selection.class);
-                //startActivity(intent);
-
-                //remove the following lines
-                //THEN_LIST.add("Hello11"+Integer.toString(count_then_selection));
-                //count_then_selection++;
-                //((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
-            //}
-                //}
+                if (count_if_selection > 0) {
+                    save_state();
+                    Intent intent = new Intent(CreateEventActivity.this, ThenSelectionActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
         Button save_button = findViewById(R.id.save_button);
 
-        save_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(count_if_selection>0 && count_then_selection>0) {
-                    //save this event into database
-                    //Also save to MY_EVENTS activity
-                    //go to MY_EVENT activity
-                    //remove everything from sharedPreference
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.clear();
-                    editor.apply();
+        save_button.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick (View view){
+                    if (count_if_selection > 0 && count_then_selection > 0) {
+                        //save this event into database
+                        //Also save to MY_EVENTS activity
+                        //go to MY_EVENT activity
+                        //remove everything from sharedPreference
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
 
-                    Toast.makeText(CreateEventActivity.this,"Saved!!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateEventActivity.this, "Saved!!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(CreateEventActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
-            }
         });
 
 
@@ -140,14 +135,31 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         if (extras != null){
             String fromWhichActivity = intent.getExtras().getString("FROM_WHICH","");
             if (fromWhichActivity.equals("IfSelectionActivity")){
-                count_if_selection++;
-                IF_LIST.add(intent.getExtras().getString("KEY_EVENT_NAME",""));
+                int number_of_events_received = intent.getExtras().getInt("NUMBER_OF_EVENTS");
+                for(int i = 1; i<= number_of_events_received; i++){
+                    count_if_selection++;
+                    IF_LIST.add(intent.getExtras().getString("KEY_EVENT_NAME_"+i,""));
+                }
+
                 ((CustomAdapterForIfSelected) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
                 save_state();
+                if(intent.getExtras().getString("KEY_EVENT_NAME_"+1,"").equals("D & T")){
+                    int y = intent.getExtras().getInt("YEAR",0);
+                    int m = intent.getExtras().getInt("MONTH",0);
+                    int d = intent.getExtras().getInt("DAY",0);
+                    int h = intent.getExtras().getInt("HOUR",0);
+                    int min = intent.getExtras().getInt("MINUTE",0);
+                    Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+                    calendar.set(y,m-1,d,h,min);
+                    Log.d("TEST ",""+calendar.get(Calendar.YEAR));
+                }
             }
             else if(fromWhichActivity.equals("ThenSelectionActivity")){
-                count_then_selection++;
-                THEN_LIST.add(intent.getExtras().getString("KEY_SERVICE_NAME",""));
+                int number_of_services_received = intent.getExtras().getInt("NUMBER_OF_SERVICES");
+                for(int i = 1; i<= number_of_services_received; i++){
+                    count_then_selection++;
+                    THEN_LIST.add(intent.getExtras().getString("KEY_SERVICE_NAME_"+i,""));
+                }
                 ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
                 save_state();
             }
@@ -155,6 +167,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 
         save_state();
     }
+
 
     @Override
     protected void onResume() {
@@ -242,6 +255,13 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 
     }
 
+    public void clear_state(){
+        SharedPreferences sharedPreferences = getSharedPreferences("DATA_CREATE_EVENT",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
 
     class CustomAdapterForIfSelected extends BaseAdapter{
 
@@ -321,4 +341,16 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
         save_state();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            clear_state();
+            Intent intent = new Intent(CreateEventActivity.this,MainActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return false;
+    }
 }
+

@@ -62,6 +62,11 @@ public class ScheduleClient {
 
     public void setRingtoneForNotification(Calendar c){ mBoundService.setRingtone(c);}
 
+
+    /**
+     * Tell Our Service to set an missed call service run background
+     *
+     */
     /**
      * When you have finished with the service call this method to stop it
      * releasing your connection and resources
