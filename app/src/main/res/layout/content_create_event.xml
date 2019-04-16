@@ -42,9 +42,9 @@
 
     <Button
         android:id="@+id/save_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/rounded_corner"
         android:text="@string/save"
         android:textColor="@color/black"
         android:textSize="@dimen/txt_size_30sp"
@@ -52,31 +52,30 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
         android:id="@+id/ListView_for_if_selected"
         android:layout_width="201dp"
         android:layout_height="178dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/select_for_then_selection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.742"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.166" />
+        app:layout_constraintTop_toBottomOf="@+id/select_for_if_selection"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ListView
         android:id="@+id/ListView_for_then_selected"
         android:layout_width="201dp"
         android:layout_height="173dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/save_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.742"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.794" />
+        app:layout_constraintTop_toBottomOf="@+id/select_for_then_selection"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/select_for_if_selection"
