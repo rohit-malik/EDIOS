@@ -27,6 +27,10 @@
             android:label="Select Service"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ThenSelectionActivity"
+            android:screenOrientation="portrait"
+            android:label="Select Service" />
+        <activity
             android:name=".AlarmTestingActivity"
             android:label="@string/title_activity_alarm_testing"
             android:theme="@style/AppTheme.NoActionBar" />

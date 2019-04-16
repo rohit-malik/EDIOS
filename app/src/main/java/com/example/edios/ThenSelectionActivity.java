@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+
+
 public class ThenSelectionActivity extends AppCompatActivity {
 
     int NumberOfTotalEvents = 3;
@@ -38,6 +40,7 @@ public class ThenSelectionActivity extends AppCompatActivity {
                 //Here Save the event selected Event Data in DataBase
                 //Then go back to createEventActivity
                 Intent intent = new Intent(ThenSelectionActivity.this,CreateEventActivity.class);
+                intent.putExtra("KEY_SERVICE_NAME","Notify");
                 intent.putExtra("KEY_EVENT_NAME","D & T");
                 intent.putExtra("FROM_WHICH","ThenSelectionActivity");
                 startActivity(intent);
@@ -128,7 +131,8 @@ public class ThenSelectionActivity extends AppCompatActivity {
                     });
 
 
-                    EditText alarmText = (EditText) findViewById(R.id.input_alarm_message);
+                    EditText alarmText =  findViewById(R.id.input_alarm_message);
+
 
 
 
@@ -163,8 +167,9 @@ public class ThenSelectionActivity extends AppCompatActivity {
                         }
                     });
 
-                    EditText serverAddressText = (EditText) findViewById(R.id.input_server_address);
-                    EditText postMessageText = (EditText) findViewById(R.id.input_text_message);
+                    EditText serverAddressText =  findViewById(R.id.input_server_address);
+                    EditText postMessageText =  findViewById(R.id.input_text_message);
+
 
                 }
 

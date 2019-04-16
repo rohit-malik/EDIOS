@@ -17,7 +17,7 @@
         tools:layout_editor_absoluteY="2dp" />
 
     <ImageButton
-        android:id="@+id/imageButton_inside_listView_then_selection"
+        android:id="@+id/CancelButton_inside_listView_then_selection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
