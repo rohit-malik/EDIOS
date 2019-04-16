@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AllServices"></activity>
+        <activity android:name=".MyRecipes"></activity>
+        <activity android:name=".AllServices" />
         <activity android:name=".AllEvents" />
         <activity
             android:name=".ThenSelectionActivity"
@@ -20,8 +21,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ThenSelectionActivity"
-            android:screenOrientation="portrait"
-            android:label="Select Service" />
+            android:label="Select Service"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AlarmTestingActivity"
             android:label="@string/title_activity_alarm_testing"

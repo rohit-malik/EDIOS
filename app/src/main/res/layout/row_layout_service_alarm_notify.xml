@@ -13,7 +13,7 @@
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Alarm Notification"
+        android:text="@string/alarm_notification"
         android:textSize="@dimen/txt_size_30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.023" />
 
     <CheckBox
-        android:id="@+id/checkBox_time_date"
+        android:id="@+id/checkBox_alarm_notify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleX="2"
@@ -38,10 +38,16 @@
 
 
     <EditText
+        android:layout_marginTop="15dp"
         android:id="@+id/input_alarm_message"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
         android:inputType="text"
+        android:lines="3"
+        android:hint="@string/type_alarm_message"
+        android:background="@drawable/rounded_corner_for_edittext"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -52,6 +58,7 @@
 
 
     <ImageButton
+        android:layout_marginTop="20dp"
         android:id="@+id/description_alarm"
         android:layout_width="wrap_content"
         android:layout_height="44dp"
