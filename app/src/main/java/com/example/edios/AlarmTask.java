@@ -35,8 +35,14 @@ public class AlarmTask implements Runnable {
 
         // Request to start are service when the alarm date is upon us
         // We don't start an activity as we just want to pop up a notification into the system bar not a full activity
-        Intent intent = new Intent(context, NotifyService.class);
-        intent.putExtra(NotifyService.INTENT_NOTIFY, true);
+        //Intent intent = new Intent(context, NotifyService.class);
+        //intent.putExtra(NotifyService.INTENT_NOTIFY, true);
+        //PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+
+
+        Intent intent = new Intent(context, RingtoneLevelService.class);
+        intent.putExtra(RingtoneLevelService.INTENT_NOTIFY, true);
+        intent.putExtra("volumeLevel",0.7f);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
 
         // Sets an alarm - note this alarm will be lost if the phone is turned off and on again

@@ -1,5 +1,6 @@
 package com.example.edios;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -126,11 +127,14 @@ public class AlarmTestingActivity extends AppCompatActivity
         // we set the time to midnight (i.e. the first minute of that day)
         Calendar c = Calendar.getInstance();
         c.set(year, month, day);
-        c.set(Calendar.HOUR_OF_DAY, 7);
-        c.set(Calendar.MINUTE, 31);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 11);
+
         c.set(Calendar.SECOND, 0);
+        Intent intent = getIntent();
         // Ask our service to set an alarm for that date, this activity talks to the client that talks to the service
         scheduleClient.setAlarmForNotification(c);
+        //scheduleClient.setMissedCallService(intent);
         // Notify the user what they just did
         Toast.makeText(this, "Notification set for: "+ day +"/"+ (month+1) +"/"+ year, Toast.LENGTH_SHORT).show();
     }

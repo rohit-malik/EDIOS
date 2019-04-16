@@ -46,10 +46,11 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -89,6 +90,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
             public void onClick(View view) {
                 save_state();
                 Intent intent = new Intent(CreateEventActivity.this,IfSelectionActivity.class);
+
                 startActivity(intent);
             }
         });
@@ -97,7 +99,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         select_for_then_selection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(count_if_selection > 0) {
+                if (count_if_selection > 0) {
                     save_state();
                     Intent intent = new Intent(CreateEventActivity.this, ThenSelectionActivity.class);
                     startActivity(intent);
@@ -107,23 +109,23 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 
         Button save_button = findViewById(R.id.save_button);
 
-        save_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(count_if_selection>0 && count_then_selection>0) {
-                    //save this event into database
-                    //Also save to MY_EVENTS activity
-                    //go to MY_EVENT activity
-                    //remove everything from sharedPreference
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.clear();
-                    editor.apply();
+        save_button.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick (View view){
+                    if (count_if_selection > 0 && count_then_selection > 0) {
+                        //save this event into database
+                        //Also save to MY_EVENTS activity
+                        //go to MY_EVENT activity
+                        //remove everything from sharedPreference
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
 
-                    Toast.makeText(CreateEventActivity.this,"Saved!!",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(CreateEventActivity.this,MainActivity.class);
-                    startActivity(intent);
+                        Toast.makeText(CreateEventActivity.this, "Saved!!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(CreateEventActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
-            }
         });
 
 
@@ -165,6 +167,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 
         save_state();
     }
+
 
     @Override
     protected void onResume() {
@@ -350,3 +353,4 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         return false;
     }
 }
+

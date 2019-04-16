@@ -1,26 +1,33 @@
 package com.example.edios;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    //IntentFilter intentFilter;
+    private BroadcastReceiver broadcastReceiver;
+    private Button buttonBroadcastIntent;
+    public int REQUEST_READ_PHONE_STATE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +49,7 @@ public class MainActivity extends AppCompatActivity
 
 
         addListenerOnButtons();
-
+        //broadcastReceiver=new CallReceiver();
     }
 
     @Override
@@ -111,7 +118,6 @@ public class MainActivity extends AppCompatActivity
 
         final Context context = this;
 
-        ImageButton Add_New_Events = findViewById(R.id.add_new_events_in_content_main);
         Button checkAlarm = findViewById(R.id.checkAlarmButton);
         checkAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +127,17 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+//        Button sendData = findViewById(R.id.http);
+//        sendData.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, SendData.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        ImageButton Add_New_Events = findViewById(R.id.add_new_events_in_content_main);
         Add_New_Events.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,6 +145,57 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+
+//
+//        Button if_missed = findViewById(R.id.if_missed);
+//        if_missed.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i(TAG, "Inside onClick: ");
+//                Intent intent=new Intent();
+//                intent.addCategory(Intent.CATEGORY_DEFAULT);
+//                intent.setAction("android.intent.action.PHONE_STATE");
+//                int permissionCheck = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE);
+//
+//                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
+//                } else {
+//                    //TODO
+//                    sendBroadcast(intent);
+//                }
+//            }
+//        });
+
+
+
+        Button then_submit= findViewById(R.id.then_submit);
+        then_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SendData.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //IntentFilter intentFilter=new IntentFilter("my.custom.action.tag.fordemo");
+        //intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        //registerReceiver(broadcastReceiver,intentFilter);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //unregisterReceiver(broadcastReceiver);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
