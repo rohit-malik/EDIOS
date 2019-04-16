@@ -12,10 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class AlarmTestingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,6 +28,8 @@ public class AlarmTestingActivity extends AppCompatActivity
     private ScheduleClient scheduleClient;
     // This is the date picker used to select the date for our notification
     private DatePicker picker;
+    private Spinner spinner_hour;
+    private Spinner spinner_minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,43 @@ public class AlarmTestingActivity extends AppCompatActivity
 
         // Get a reference to our date picker
         picker = (DatePicker) findViewById(R.id.scheduleTimePicker);
+        spinner_hour = findViewById(R.id.spinner_hour);
+        spinner_minute = findViewById(R.id.spinner_minute);
+        String hour[] = new String[25];
+        String minute[] = new String[61];
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        int current_year = calendar.get(Calendar.YEAR);
+        int current_month = calendar.get(Calendar.MONTH);
+        int current_day = calendar.get(Calendar.DAY_OF_MONTH);
+        int current_hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int current_minute = calendar.get(Calendar.MINUTE);
+
+
+        for (int i = 0; i<25; i++){
+            if(i == 0){
+                hour[i] = Integer.toString(current_hour);
+                continue;
+            }
+            hour[i] = Integer.toString(i-1);
+        }
+        for (int i = 0; i<61; i++){
+            if(i == 0){
+                minute[i] = Integer.toString(current_minute);
+                continue;
+            }
+            minute[i] = Integer.toString(i-1);
+        }
+
+
+
+        ArrayAdapter adapter_hour = new ArrayAdapter(AlarmTestingActivity.this,android.R.layout.simple_spinner_item,hour);
+        adapter_hour.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_hour.setAdapter(adapter_hour);
+
+        ArrayAdapter adapter_minute = new ArrayAdapter(AlarmTestingActivity.this,android.R.layout.simple_spinner_item,minute);
+        adapter_minute.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_minute.setAdapter(adapter_minute);
     }
 
     @Override
@@ -119,6 +161,10 @@ public class AlarmTestingActivity extends AppCompatActivity
 
     public void onDateSelectedButtonClick(View v){
         // Get the date from our datePicker
+        String shour = spinner_hour.getSelectedItem().toString();
+        int hour = Integer.parseInt(shour);
+        String sminute = spinner_minute.getSelectedItem().toString();
+        int minute = Integer.parseInt(sminute);
         int day = picker.getDayOfMonth();
         int month = picker.getMonth();
         int year = picker.getYear();
@@ -126,11 +172,12 @@ public class AlarmTestingActivity extends AppCompatActivity
         // we set the time to midnight (i.e. the first minute of that day)
         Calendar c = Calendar.getInstance();
         c.set(year, month, day);
-        c.set(Calendar.HOUR_OF_DAY, 22);
-        c.set(Calendar.MINUTE, 51);
+        c.set(Calendar.HOUR_OF_DAY, hour);
+        c.set(Calendar.MINUTE, minute);
         c.set(Calendar.SECOND, 0);
         // Ask our service to set an alarm for that date, this activity talks to the client that talks to the service
         scheduleClient.setAlarmForNotification(c);
+        scheduleClient.setRingtoneForNotification(c);
         // Notify the user what they just did
         Toast.makeText(this, "Notification set for: "+ day +"/"+ (month+1) +"/"+ year, Toast.LENGTH_SHORT).show();
     }

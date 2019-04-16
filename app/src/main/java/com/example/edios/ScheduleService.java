@@ -44,4 +44,8 @@ public class ScheduleService extends Service {
         new AlarmTask(this, c).run();
     }
 
+    public void setRingtone(Calendar c){
+        new RingtoneLevelTask(this,c).run();
+    }
+
 }

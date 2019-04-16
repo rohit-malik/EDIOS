@@ -60,6 +60,8 @@ public class ScheduleClient {
         mBoundService.setAlarm(c);
     }
 
+    public void setRingtoneForNotification(Calendar c){ mBoundService.setRingtone(c);}
+
     /**
      * When you have finished with the service call this method to stop it
      * releasing your connection and resources
