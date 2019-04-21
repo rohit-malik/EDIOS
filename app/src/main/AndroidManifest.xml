@@ -60,6 +60,10 @@
         <service android:name=".NotifyService" />
         <service android:name=".RingtoneLevelService" />
         <service android:name=".MissedCallBackgroundService"/>
+        <service android:name=".AlarmService" />
+        <service android:name=".SendDataService" />
+
+        <receiver android:name=".AlarmBroadcastReceiver" />
     </application>
 
 </manifest>
