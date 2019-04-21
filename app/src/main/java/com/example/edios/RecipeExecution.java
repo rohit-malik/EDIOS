@@ -28,8 +28,8 @@ public class RecipeExecution extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_execution);
         //scheduleClient = new ScheduleClient(this);
-        scheduleClient = new ScheduleClient(RecipeExecution.this);
-        scheduleClient.doBindService();
+        //scheduleClient = new ScheduleClient(RecipeExecution.this);
+        //scheduleClient.doBindService();
         //cc =
         Log.e("Inside Excecute", "ExecuteServices: " );
         Intent intent = getIntent();

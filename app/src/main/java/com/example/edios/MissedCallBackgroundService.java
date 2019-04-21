@@ -23,11 +23,15 @@ public class MissedCallBackgroundService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         //* This is Previous Code
         // Create an IntentFilter instance.
-        this.str = intent.getStringExtra("name");
+        //this.str = intent.getStringExtra("name");
 //        Intent intent1 = new Intent(this,CallReceiver.class);
 //        intent1.putExtra("name",str);
-
-
+        return START_STICKY;
+        //return super.onStartCommand(intent, flags, startId);
+    }
+    @Override
+    public void onCreate() {
+        super.onCreate();
         IntentFilter intentFilter = new IntentFilter();
         // Add network connectivity change action.
         intentFilter.addAction("android.intent.action.PHONE_STATE");
@@ -45,12 +49,7 @@ public class MissedCallBackgroundService extends Service {
 //        sendBroadcast(intent);
         Log.e(TAG, "Registered ");
         //Log.w(misscallreceiver , "Service onCreate: screenOnOffReceiver is registered.");
-        return START_STICKY;
-        //return super.onStartCommand(intent, flags, startId);
-    }
-    @Override
-    public void onCreate() {
-        super.onCreate();
+
     }
 
 

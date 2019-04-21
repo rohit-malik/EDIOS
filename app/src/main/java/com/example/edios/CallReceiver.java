@@ -55,7 +55,26 @@ public class CallReceiver extends BroadcastReceiver {
             // If phone was ringing(ring=true) and not received(callReceived=false) , then it is a missed call
             if (!callReceived)
                 if (ring) {
-                    Log.d(TAG, "it's Missed CAall");
+                    Log.d(TAG, "it's Missed Call");
+
+
+                    Intent my_intent = new Intent(mContext, NotifyService.class);
+                    my_intent.putExtra(NotifyService.INTENT_NOTIFY, true);
+                    mContext.startService(my_intent);
+
+
+//
+//                    Intent my_intent = new Intent(mContext, RingtoneLevelService.class);
+//                    my_intent.putExtra(RingtoneLevelService.INTENT_NOTIFY, true);
+//                    mContext.startService(my_intent);
+
+
+//
+//                    Intent my_intent = new Intent(mContext, SendDataService.class);
+//                    //my_intent.putExtra(RingtoneLevelService.INTENT_NOTIFY, true);
+//                    Log.d("Hello", "onReceive: else if of send_data");
+//                    mContext.startService(my_intent);
+
                     Toast.makeText(mContext, "It was A MISSED CALL from : " + callerPhoneNumber, Toast.LENGTH_LONG).show();
                 }
         }
