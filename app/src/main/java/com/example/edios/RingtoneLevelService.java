@@ -46,7 +46,8 @@ public class RingtoneLevelService extends Service {
 
         // If this service was started by out AlarmTask intent then we want to show our notification
         if(intent.getBooleanExtra(INTENT_NOTIFY, false)) {
-            float volume = intent.getFloatExtra("volumeLevel",1);
+            //float volume = intent.getFloatExtra("volumeLevel",1);
+            float volume = 1;
             setRingtoneLevel(volume);
         }
 

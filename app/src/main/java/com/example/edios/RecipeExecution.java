@@ -33,11 +33,13 @@ public class RecipeExecution extends AppCompatActivity {
         //cc =
         Log.e("Inside Excecute", "ExecuteServices: " );
         Intent intent = getIntent();
-        Button button = findViewById(R.id.button);
+        //Button button = findViewById(R.id.button);
         Button send = findViewById(R.id.sendData);
         Button br_on = findViewById(R.id.br_on);
         Button br_off = findViewById(R.id.br_off);
+        Button test_button = findViewById(R.id.test_button);
 
+/*
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +54,7 @@ public class RecipeExecution extends AppCompatActivity {
                 scheduleClient.setAlarmForNotification(c);
             }
         });
+        */
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +92,24 @@ public class RecipeExecution extends AppCompatActivity {
                 Intent backgroundService = new Intent(getApplicationContext(), MissedCallBackgroundService.class);
                 stopService(backgroundService);
                 Log.d("Service", "Service Stopped");
+            }
+        });
+
+        test_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backgroundService = new Intent(getApplicationContext(), AlarmService.class);
+                Calendar c = Calendar.getInstance();
+                c.set(2019, Calendar.APRIL, 21);
+
+                c.set(Calendar.HOUR_OF_DAY, 19);
+                c.set(Calendar.MINUTE, 36);
+
+
+                c.set(Calendar.SECOND, 0);
+                backgroundService.putExtra("calender",c);
+                backgroundService.putExtra("service_name","send_data");
+                context.startService(backgroundService);
             }
         });
         // Ask our service to set an alarm for that date, this activity talks to the client that talks to the service
