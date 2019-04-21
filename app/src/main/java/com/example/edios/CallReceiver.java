@@ -21,8 +21,12 @@ public class CallReceiver extends BroadcastReceiver {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context mContext, Intent intent) {
-        Log.e(TAG, "onReceive: ");
+        Log.e(TAG, "onReceive: "+intent.toString());
         // Get the current Phone State
+        //String dara = intent.getData();
+        MissedCallBackgroundService missedCallBackgroundService = new MissedCallBackgroundService();
+        String str = missedCallBackgroundService.getStr();
+        Log.e(TAG, "onReceive: "+str);
         String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
         if (state == null)
             return;

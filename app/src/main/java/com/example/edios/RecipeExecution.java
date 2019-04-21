@@ -65,7 +65,7 @@ public class RecipeExecution extends AppCompatActivity {
         br_on.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backgroundService = new Intent(getApplicationContext(), MissedCallBackgroundService.class);
+                Intent backgroundService = new Intent(getApplicationContext(), MissedCallBackgroundService.class).putExtra("name","send_data");
                 Intent intent=new Intent();
                 intent.addCategory(Intent.CATEGORY_DEFAULT);
                 intent.setAction("android.intent.action.PHONE_STATE");
