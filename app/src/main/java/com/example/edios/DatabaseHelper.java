@@ -54,9 +54,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create all The tables using a function which reads the sql file line by line
+        //String str = "CREATE TABLE IF NOT EXISTS events (event_id INTEGER PRIMARY KEY, event_name TEXT NOT NULL, battery_level INTEGER, caller_number TEXT, call_time NUMERIC, date_time TEXT, location TEXT, FOREIGN KEY(event_id) REFERENCES recipe(recipe_id));";
+        //db.execSQL("");
         String filename = "tables.sql";
+        Log.d(TAG, "onCreate: Inside Oncreate of DatabaseHelper");
         readAndExecuteSQLScript(db, context, filename);
-
+        
     }
 
     @Override
@@ -129,6 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             statement.append("\n");
             if (line.endsWith(";")) {
                 db.execSQL(statement.toString());
+                Log.d(TAG, "executeSQLScript: Performed Execution of Script");
                 statement = new StringBuilder();
             }
         }

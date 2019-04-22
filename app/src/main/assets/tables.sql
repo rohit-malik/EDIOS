@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS events (
  battery_level INTEGER,
  caller_number TEXT,
  call_time NUMERIC,
+ date_time TEXT,
  location TEXT,
  FOREIGN KEY(event_id) REFERENCES recipe(recipe_id)
 );
@@ -17,7 +18,7 @@ CREATE TABLE IF NOT EXISTS services (
  bluetooth_status NUMERIC,
  ip_address TEXT,
  http_data TEXT,
- date_time NUMERIC,
+ call_logs NUMERIC,
  alarm_message TEXT,
  ringtone TEXT,
  ringtone_level INTEGER,

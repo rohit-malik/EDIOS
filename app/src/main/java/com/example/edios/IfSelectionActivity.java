@@ -2,8 +2,8 @@ package com.example.edios;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -19,10 +19,8 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.TimeZone;
 
 public class IfSelectionActivity extends AppCompatActivity {
@@ -91,6 +89,7 @@ public class IfSelectionActivity extends AppCompatActivity {
                     intent.putExtra("KEY_EVENT_NAME_"+NumberOfSelectedEvents,"B Power");
 
                     SeekBar seekBar = view3.findViewById(R.id.seekBar_battery_power);
+                    TextView bar_percentage = view3.findViewById(R.id.seekbar_percentage_in_battery_power_layout);
                     int progress = seekBar.getProgress();
                     intent.putExtra("BATTERY_PERCENTAGE",progress);
                 }
@@ -343,6 +342,29 @@ public class IfSelectionActivity extends AppCompatActivity {
 
                         }
                     });
+
+                    final TextView bar_percentge = view.findViewById(R.id.seekbar_percentage_in_battery_power_layout);
+                    SeekBar seekBar = view.findViewById(R.id.seekBar_battery_power);
+                    bar_percentge.setText(String.valueOf(seekBar.getProgress()));
+
+                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                            bar_percentge.setText(String.valueOf(progress));
+                        }
+
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+
+                        }
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+
+                        }
+                    });
+
+
                 }
             }
 

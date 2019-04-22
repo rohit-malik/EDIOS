@@ -1,14 +1,12 @@
 package com.example.edios;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +30,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 public class CreateEventActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,15 +40,22 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
     ListView ListView_Then_Selected;
     List<String> IF_LIST = new ArrayList<>();
     List<String> THEN_LIST = new ArrayList<>();
-
+    SQLiteDatabase database;
+    DatabaseHelper databaseHelper;
     Context context;
-    Calendar c;
+    //Calendar c;
+    int y=0,m=0,d=0,h=0,min=0;
+    int battery_level;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Database helper Class
+        databaseHelper = DatabaseHelper.getInstance(this);
+        database = databaseHelper.getWritableDatabase();
 
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
 
@@ -67,6 +72,13 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         final SharedPreferences sharedPreferences = getSharedPreferences("DATA_CREATE_EVENT",Context.MODE_PRIVATE);
         count_if_selection = sharedPreferences.getInt("count_if_selection",0);
         count_then_selection = sharedPreferences.getInt("count_then_selection",0);
+        battery_level = sharedPreferences.getInt("battery_level",0);
+        y = sharedPreferences.getInt("year",0);
+        m = sharedPreferences.getInt("month",0);
+        d = sharedPreferences.getInt("day",0);
+        h = sharedPreferences.getInt("hour",0);
+        min = sharedPreferences.getInt("min",0);
+
 
         for(int i=0; i<count_if_selection; i++){
             IF_LIST.add(sharedPreferences.getString("IF_LIST_"+Integer.toString(i),""));
@@ -123,13 +135,93 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                 @Override
                 public void onClick (View view){
                     if (count_if_selection > 0 && count_then_selection > 0) {
-                        //save this event into database
                         //Also save to MY_EVENTS activity
                         //go to MY_EVENT activity
-                        //remove everything from sharedPreference
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
+                        for(int i=0;i<IF_LIST.size();i++) {
+                            if (IF_LIST.get(i).equals("D & T")) {
+                                //Insert data
+                                Calendar c = Calendar.getInstance();
+                                c.set(y,m,d,h,min);
+                                long cc = c.getTimeInMillis();
+                                String datetime = String.valueOf(cc);
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put("event_name","date_time");
+                                contentValues.put("date_time",datetime);
+                                //long result = 0
+                                long result = database.insert("events", null, contentValues);
+                                if(result==-1){
+                                    Toast.makeText(CreateEventActivity.this, "Not Done",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    Toast.makeText(CreateEventActivity.this, "Data Inserted",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            else if (IF_LIST.get(i).equals("B Power")) {
+                                //Insert data
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put("event_name","battery_level");
+                                Log.e("Before inserting", "onClick: Battery Level is "+battery_level);
+                                contentValues.put("battery_level",battery_level);
+                                long result = database.insert("events", null, contentValues);
+                                if(result==-1){
+                                    Toast.makeText(CreateEventActivity.this, "Not Done",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    Toast.makeText(CreateEventActivity.this, "Data Inserted",
+                                            Toast.LENGTH_LONG).show();
+                                }
+
+
+                            }
+                            else if (IF_LIST.get(i).equals("M Call")) {
+                                //Insert data
+                            }
+                        }
+
+//                        Intent if_intent = getIntent();
+//                        int number_of_events = if_intent.getIntExtra("NUMBER_OF_EVENTS",0);
+//                        Log.d("Save Button Pressed", "onClick: "+number_of_events);
+//
+//                        for(int i=1;i<=number_of_events;i++) {
+//                            String str = if_intent.getStringExtra("KEY_EVENT_NAME_"+i);
+//                            if(str.equals("D & T")) {
+//                                Log.d("inside Loop", "onClick: D and T");
+//                                int y = if_intent.getIntExtra("YEAR",0);
+//                                int m = if_intent.getIntExtra("MONTH",0);
+//                                int d = if_intent.getIntExtra("DAY",0);
+//                                int h = if_intent.getIntExtra("HOUR",0);
+//                                int min = if_intent.getIntExtra("MINUTE",0);
+//                                Calendar c = Calendar.getInstance();
+//                                c.set(y,m,d,h,min);
+//                                long cc = c.getTimeInMillis();
+//                                String datatime = String.valueOf(cc);
+//                                ContentValues contentValues = new ContentValues();
+//                                contentValues.put("date_time",datatime);
+//                                long result = database.insert("events", null, contentValues);
+//                                if(result==-1){
+//                                    Toast.makeText(CreateEventActivity.this, "Not Done",
+//                                            Toast.LENGTH_LONG).show();
+//                                }
+//                                else {
+//                                    Toast.makeText(CreateEventActivity.this, "Data Inserted",
+//                                            Toast.LENGTH_LONG).show();
+//                                }
+//                            }
+//
+//
+//                            if(str.equals("B Power")) {
+//                                int progress = if_intent.getIntExtra("YEAR",0);
+//                            }
+//
+//
+//
+//                        }
 
                         Toast.makeText(CreateEventActivity.this, "Saved!!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(CreateEventActivity.this, MainActivity.class);
@@ -144,24 +236,31 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         Bundle extras = intent.getExtras();
         if (extras != null){
             String fromWhichActivity = intent.getExtras().getString("FROM_WHICH","");
-            if (fromWhichActivity.equals("IfSelectionActivity")){
+            if (fromWhichActivity.equals("IfSelectionActivity")) {
+
                 int number_of_events_received = intent.getExtras().getInt("NUMBER_OF_EVENTS");
-                for(int i = 1; i<= number_of_events_received; i++){
+                for (int i = 1; i <= number_of_events_received; i++) {
                     count_if_selection++;
-                    IF_LIST.add(intent.getExtras().getString("KEY_EVENT_NAME_"+i,""));
+                    IF_LIST.add(intent.getExtras().getString("KEY_EVENT_NAME_" + i, ""));
                 }
 
                 ((CustomAdapterForIfSelected) ListView_If_Selected.getAdapter()).notifyDataSetChanged();
                 save_state();
-                if(intent.getExtras().getString("KEY_EVENT_NAME_"+1,"").equals("D & T")){
-                    int y = intent.getExtras().getInt("YEAR",0);
-                    int m = intent.getExtras().getInt("MONTH",0);
-                    int d = intent.getExtras().getInt("DAY",0);
-                    int h = intent.getExtras().getInt("HOUR",0);
-                    int min = intent.getExtras().getInt("MINUTE",0);
-                    Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-                    calendar.set(y,m-1,d,h,min);
-                    Log.d("TEST ",""+calendar.get(Calendar.YEAR));
+
+                for (int i = 1; i <= number_of_events_received; i++) {
+                    if (intent.getExtras().getString("KEY_EVENT_NAME_" + i, "").equals("D & T")) {
+                        y = intent.getExtras().getInt("YEAR", 0);
+                        m = intent.getExtras().getInt("MONTH", 0);
+                        d = intent.getExtras().getInt("DAY", 0);
+                        h = intent.getExtras().getInt("HOUR", 0);
+                        min = intent.getExtras().getInt("MINUTE", 0);
+                        //Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+                        //c.set(y, m, d, h, min);
+                        //Log.d("TEST ", "" + c.get(Calendar.YEAR));
+                    } else if (intent.getExtras().getString("KEY_EVENT_NAME_" + i, "").equals("B Power")) {
+                        battery_level = intent.getIntExtra("BATTERY_PERCENTAGE",0);
+                        Log.e("inside Battery Intent", "onCreate: "+battery_level);
+                    }
                 }
             }
             else if(fromWhichActivity.equals("ThenSelectionActivity")){
@@ -260,6 +359,12 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 
         editor.putInt("count_if_selection",count_if_selection);
         editor.putInt("count_then_selection",count_then_selection);
+        editor.putInt("battery_level",battery_level);
+        editor.putInt("year",y);
+        editor.putInt("month",m);
+        editor.putInt("day",d);
+        editor.putInt("hour",h);
+        editor.putInt("min",min);
 
         editor.apply();
 
