@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.provider.CallLog;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -32,13 +31,13 @@ import java.util.List;
 
 public class SendDataService extends Service {
     private static final String TAG = "MainActivity";
-    public String postReceiverUrl = "http://172.21.5.208/edios/getFixture.php";
+    public String postReceiverUrl="null";// = "http://172.21.5.208/edios/getFixture.php";
 
     // HttpClient
     public HttpClient httpClient = new DefaultHttpClient();
 
     // post header
-    private HttpPost httpPost;
+    HttpPost httpPost = new HttpPost("null");
     private List<NameValuePair> nameValuePairs = new ArrayList<>(2);
     public int REQUEST_CODE_TO_READ_CALL_LOGS = 1;
     @Nullable
@@ -46,7 +45,7 @@ public class SendDataService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
-
+    String ip_address="null";
 
     @Override
     public void onCreate() {
@@ -56,9 +55,13 @@ public class SendDataService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //return super.onStartCommand(intent, flags, startId);
-        Log.d(TAG, "onStartCommand: ");
-        httpPost = new HttpPost(postReceiverUrl);
-        //getCallDetails(this);
+        if (intent!=null) {
+            ip_address = intent.getStringExtra("ip_address");
+            postReceiverUrl = ip_address;
+            Log.d(TAG, "onStartCommand: This is URL recieved"+postReceiverUrl);
+            httpPost = new HttpPost(postReceiverUrl);
+            //getCallDetails(this);
+        }
         new PostDataAsyncTask().execute();
         return START_STICKY;
     }

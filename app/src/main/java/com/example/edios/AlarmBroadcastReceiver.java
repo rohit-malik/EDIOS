@@ -48,11 +48,31 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
                     int call_logs = r_cursor2.getInt(8);
                     Log.d("H post","h post service is executed");
                     Log.d("Call logs is selected", String.valueOf(call_logs));
-
-                    Intent my_intent = new Intent(context, SendDataService.class);
-                    //my_intent.putExtra(RingtoneLevelService.INTENT_NOTIFY, true);
-                    Log.d("Hello", "onReceive: else if of send_data");
-                    context.startService(my_intent);
+                    String http_data = r_cursor2.getString(7);
+                    String ip_address = r_cursor2.getString(6);
+                    if (call_logs==1) {
+                        //Run call log service
+                        Intent my_intent = new Intent(context, SendDataService.class);
+                        my_intent.putExtra("ip_address",ip_address);
+                        my_intent.putExtra("call_logs",call_logs);
+                        //my_intent.putExtra(RingtoneLevelService.INTENT_NOTIFY, true);
+                        Log.d("Hello", "onReceive: else if of send_data");
+                        context.startService(my_intent);
+                    }
+                    else if(call_logs==0) {
+                        //Run text data service
+                        Intent my_intent = new Intent(context, SendTextService.class);
+                        my_intent.putExtra("http_data",http_data);
+                        my_intent.putExtra("ip_address",ip_address);
+                        //my_intent.putExtra("call_logs",call_logs);
+                        //my_intent.putExtra(RingtoneLevelService.INTENT_NOTIFY, true);
+                        Log.d("Hello", "onReceive: else if of send_data");
+                        context.startService(my_intent);
+                    }
+//                    Intent my_intent = new Intent(context, SendDataService.class);
+//                    //my_intent.putExtra(RingtoneLevelService.INTENT_NOTIFY, true);
+//                    Log.d("Hello", "onReceive: else if of send_data");
+//                    context.startService(my_intent);
                 }
                 else if(service_name.equals("set_volume")){
                     Log.d("Set volume","set volume service is executed");

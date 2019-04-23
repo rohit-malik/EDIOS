@@ -42,8 +42,9 @@ public class NotifyService extends Service {
     // The system notification manager
     private NotificationManager mNotificationManager;
 
-    private String string;
+    private String string="null";
 
+    Boolean aBoolean=false;
     @Override
     public void onCreate() {
         Log.i("NotifyService", "onCreate()");
@@ -55,14 +56,18 @@ public class NotifyService extends Service {
         Log.i("LocalService", "Received start id " + startId + ": " + intent);
 
         // If this service was started by out AlarmTask intent then we want to show our notification
-        if(intent.getBooleanExtra(INTENT_NOTIFY, false)) {
-            string = intent.getStringExtra("message");
-            showNotification();
+        if(intent!=null) {
+            aBoolean = intent.getBooleanExtra(INTENT_NOTIFY,false);
+            if(aBoolean) {
+                string = intent.getStringExtra("message");
+                showNotification();
+            }
         }
 
+
         // We don't care if this service is stopped as we have already delivered our notification
-        return START_NOT_STICKY;
-        //return START_STICKY;
+        //return START_NOT_STICKY;
+        return START_STICKY;
     }
 
 
