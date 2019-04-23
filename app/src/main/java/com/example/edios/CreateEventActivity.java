@@ -1,13 +1,18 @@
 package com.example.edios;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -34,6 +39,7 @@ import java.util.List;
 public class CreateEventActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    public int REQUEST_READ_PHONE_STATE = 1;
     int count_if_selection = 0;
     int count_then_selection = 0;
     ListView ListView_If_Selected;
@@ -44,8 +50,9 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
     DatabaseHelper databaseHelper;
     Context context;
     //Calendar c;
-    int y=0,m=0,d=0,h=0,min=0;
-    int battery_level;
+    int y=0,m=0,d=0,h=0,min=0,battery_level,recent_recipe_id;
+    Boolean send_call_logs;
+    String alarm_msg,server_address,post_msg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +85,10 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         d = sharedPreferences.getInt("day",0);
         h = sharedPreferences.getInt("hour",0);
         min = sharedPreferences.getInt("min",0);
-
+        send_call_logs = sharedPreferences.getBoolean("send_call_logs ",false);
+        alarm_msg = sharedPreferences.getString("alarm_msg","null");
+        server_address = sharedPreferences.getString("server_address","null");
+        post_msg = sharedPreferences.getString("post_msg","null");
 
         for(int i=0; i<count_if_selection; i++){
             IF_LIST.add(sharedPreferences.getString("IF_LIST_"+Integer.toString(i),""));
@@ -140,6 +150,35 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
+
+                        //Recipe Insertion
+                        ContentValues r_contentValues = new ContentValues();
+                        r_contentValues.put("event_list","null");
+                        r_contentValues.put("service_list","null");
+                        //long result = 0
+                        long r_result = database.insert("recipe", null, r_contentValues);
+                        if(r_result==-1){
+                            Toast.makeText(CreateEventActivity.this, "Not Done",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(CreateEventActivity.this, "Data Inserted",
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+            //Fetching the Recent Recipe ID
+                        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+                        Cursor r_cursor = db.rawQuery("select max(recipe_id) from recipe",null);
+                        //String books = "";
+                        if (r_cursor.moveToFirst()){
+                            do {
+                                // Passing values
+                                recent_recipe_id = r_cursor.getInt(0);
+                                // Do something Here with values
+                            } while(r_cursor.moveToNext());
+                        }
+                        r_cursor.close();
+
                         for(int i=0;i<IF_LIST.size();i++) {
                             if (IF_LIST.get(i).equals("D & T")) {
                                 //Insert data
@@ -148,6 +187,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                                 long cc = c.getTimeInMillis();
                                 String datetime = String.valueOf(cc);
                                 ContentValues contentValues = new ContentValues();
+                                contentValues.put("event_id",recent_recipe_id);
                                 contentValues.put("event_name","date_time");
                                 contentValues.put("date_time",datetime);
                                 //long result = 0
@@ -160,10 +200,15 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                                     Toast.makeText(CreateEventActivity.this, "Data Inserted",
                                             Toast.LENGTH_LONG).show();
                                 }
+                                Intent backgroundService = new Intent(getApplicationContext(), AlarmService.class);
+                                backgroundService.putExtra("calender",c);
+                                //backgroundService.putExtra("service_name","notification");
+                                startService(backgroundService);
                             }
                             else if (IF_LIST.get(i).equals("B Power")) {
                                 //Insert data
                                 ContentValues contentValues = new ContentValues();
+                                contentValues.put("event_id",recent_recipe_id);
                                 contentValues.put("event_name","battery_level");
                                 Log.e("Before inserting", "onClick: Battery Level is "+battery_level);
                                 contentValues.put("battery_level",battery_level);
@@ -181,6 +226,79 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                             }
                             else if (IF_LIST.get(i).equals("M Call")) {
                                 //Insert data
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put("event_id",recent_recipe_id);
+                                contentValues.put("event_name","missed_call");
+                                Log.e("Before inserting", "onClick: Missed call Entry");
+                                contentValues.put("missed_call",1);
+                                long result = database.insert("events", null, contentValues);
+                                if(result==-1){
+                                    Toast.makeText(CreateEventActivity.this, "Not Done",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    Toast.makeText(CreateEventActivity.this, "Data Inserted",
+                                            Toast.LENGTH_LONG).show();
+                                }
+
+
+                                //Starting of Missed Call Service
+                                Intent backgroundService = new Intent(getApplicationContext(), MissedCallBackgroundService.class).putExtra("name","send_data");
+                                Intent intent=new Intent();
+                                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                intent.setAction("android.intent.action.PHONE_STATE");
+                                int permissionCheck = ContextCompat.checkSelfPermission(CreateEventActivity.this, Manifest.permission.READ_PHONE_STATE);
+                                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(CreateEventActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
+                                    Log.e("Hey", "in IF ");
+                                } else {
+                                    //TODO
+                                    Log.e("Hey", "in Else");
+                                    Log.e("Hey", "Permission value: "+permissionCheck);
+                                    startService(backgroundService);
+                                }
+                                Log.d("Service", "Service Started");
+                            }
+                        }
+
+                        for(int i=0;i<THEN_LIST.size();i++) {
+                            if (THEN_LIST.get(i).equals("H Post")) {
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put("service_id",recent_recipe_id);
+                                contentValues.put("service_name","H_Post");
+                                Log.e("Before inserting", "onClick: All data is "+server_address+post_msg+send_call_logs);
+                                contentValues.put("ip_address",server_address);
+                                contentValues.put("http_data",post_msg);
+                                int temp=0;
+                                if(send_call_logs==true) {
+                                    temp=1;
+                                }
+                                contentValues.put("call_logs",temp);
+                                long result = database.insert("services", null, contentValues);
+                                if(result==-1){
+                                    Toast.makeText(CreateEventActivity.this, "Not Done",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    Toast.makeText(CreateEventActivity.this, "Data Inserted",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            else if (THEN_LIST.get(i).equals("Alarm")) {
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put("service_id",recent_recipe_id);
+                                contentValues.put("service_name","Alarm");
+                                Log.e("Before inserting", "onClick: All data is "+alarm_msg);
+                                contentValues.put("alarm_message",alarm_msg);
+                                long result = database.insert("services", null, contentValues);
+                                if(result==-1){
+                                    Toast.makeText(CreateEventActivity.this, "Not Done",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    Toast.makeText(CreateEventActivity.this, "Data Inserted",
+                                            Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
 
@@ -270,7 +388,20 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                     THEN_LIST.add(intent.getExtras().getString("KEY_SERVICE_NAME_"+i,""));
                 }
                 ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
+
                 save_state();
+
+                for (int i = 1; i <= number_of_services_received; i++) {
+                    if (intent.getExtras().getString("KEY_SERVICE_NAME_" + i, "").equals("Alarm")) {
+                         alarm_msg = intent.getStringExtra("ALARM_MESSAGE");
+                        //Log.d("TEST ", "" + c.get(Calendar.YEAR));
+                    } else if (intent.getExtras().getString("KEY_SERVICE_NAME_" + i, "").equals("H Post")) {
+                        send_call_logs = intent.getBooleanExtra("SEND_CALL_LOGS_?",false);
+                        server_address = intent.getStringExtra("SERVER_ADDRESS");
+                        post_msg = intent.getStringExtra("MESSAGE_TO_POST_ON_SERVER");
+                        Log.e("inside H post Intent", "onCreate: "+server_address+send_call_logs+post_msg);
+                    }
+                }
             }
         }
 
@@ -365,7 +496,10 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         editor.putInt("day",d);
         editor.putInt("hour",h);
         editor.putInt("min",min);
-
+        editor.putBoolean("send_call_logs",send_call_logs);
+        editor.putString("post_msg",post_msg);
+        editor.putString("server_address",server_address);
+        editor.putString("alarm_msg",alarm_msg);
         editor.apply();
 
     }

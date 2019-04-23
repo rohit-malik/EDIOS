@@ -56,7 +56,7 @@ public class NotifyService extends Service {
 
         // If this service was started by out AlarmTask intent then we want to show our notification
         if(intent.getBooleanExtra(INTENT_NOTIFY, false)) {
-            string = intent.getStringExtra("notification");
+            string = intent.getStringExtra("message");
             showNotification();
         }
 

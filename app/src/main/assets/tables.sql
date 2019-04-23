@@ -1,16 +1,17 @@
 CREATE TABLE IF NOT EXISTS events (
- event_id INTEGER PRIMARY KEY,
+ event_id INTEGER NOT NULL,
  event_name TEXT NOT NULL,
  battery_level INTEGER,
  caller_number TEXT,
  call_time NUMERIC,
  date_time TEXT,
  location TEXT,
+ missed_call NUMERIC,
  FOREIGN KEY(event_id) REFERENCES recipe(recipe_id)
 );
 
 CREATE TABLE IF NOT EXISTS services (
- service_id INTEGER PRIMARY KEY,
+ service_id INTEGER NOT NULL,
  service_name TEXT NOT NULL,
  wifi_status NUMERIC,
  gps_status NUMERIC,
