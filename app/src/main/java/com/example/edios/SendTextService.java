@@ -31,12 +31,12 @@ import java.util.List;
 
 public class SendTextService extends Service {
     private static final String TAG = "MainActivity";
-    public String postReceiverUrl = "http://172.21.5.208/edios/getFixture.php";
+    public String postReceiverUrl="null";// = "http://172.21.5.208/edios/getFixture.php";
 
     // HttpClient
     public HttpClient httpClient = new DefaultHttpClient();
-
-    String data;
+    String ip_address="null",http_data="null";
+    //String data;
     // post header
     private HttpPost httpPost;
     private List<NameValuePair> nameValuePairs = new ArrayList<>(2);
@@ -56,9 +56,14 @@ public class SendTextService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //return super.onStartCommand(intent, flags, startId);
+        if(intent!=null) {
+            ip_address = intent.getStringExtra("ip_address");
+            http_data = intent.getStringExtra("http_data");
+            postReceiverUrl = ip_address;
+        }
         Log.d(TAG, "onStartCommand: ");
         httpPost = new HttpPost(postReceiverUrl);
-        data = intent.getStringExtra("data");
+        //data = intent.getStringExtra("data");
         //getCallDetails(this);
         new PostDataAsyncTask().execute();
         return START_STICKY;
@@ -115,12 +120,12 @@ public class SendTextService extends Service {
             //nameValuePairs.add(new BasicNameValuePair("email", "mike@testmail.com"));
             //Putting The data in a Object for sending
             nameValuePairs.clear();
-            nameValuePairs.add(new BasicNameValuePair("data", data));
+            nameValuePairs.add(new BasicNameValuePair("data", http_data));
             //nameValuePairs.add(new BasicNameValuePair("Type", data));
             //nameValuePairs.add(new BasicNameValuePair("Date", callDate));
             //nameValuePairs.add(new BasicNameValuePair("Duration", callDuration));
             //Sending data
-            postText();
+            //postText();
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // execute HTTP post request

@@ -62,6 +62,7 @@
         <service android:name=".MissedCallBackgroundService"/>
         <service android:name=".AlarmService" />
         <service android:name=".SendDataService" />
+        <service android:name=".SendTextService" />
 
         <receiver android:name=".AlarmBroadcastReceiver" />
     </application>
