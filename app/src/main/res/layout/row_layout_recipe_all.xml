@@ -23,7 +23,6 @@
         app:layout_constraintVertical_bias="0.022" />
 
     <ImageView
-        android:onClick="delete_recipe_button"
         android:id="@+id/delete_recipe"
         android:layout_width="35dp"
         android:layout_height="38dp"

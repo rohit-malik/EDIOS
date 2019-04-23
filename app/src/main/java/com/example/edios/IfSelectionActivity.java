@@ -49,7 +49,7 @@ public class IfSelectionActivity extends AppCompatActivity {
                 intent.putExtra("FROM_WHICH", "IfSelectionActivity");
 
 
-                View view1 = getViewByPosition(1,listViewForIfSelection);//getLayoutInflater().inflate(R.layout.row_layout_event_time_date,null);
+                View view1 = getViewByPosition(1,listViewForIfSelection);
                 CheckBox checkBox1 = view1.findViewById(R.id.checkBox_time_date);
                 if(checkBox1.isChecked()){
                     NumberOfSelectedEvents++;
@@ -65,7 +65,7 @@ public class IfSelectionActivity extends AppCompatActivity {
                     int min = Integer.parseInt(spinner_minute.getSelectedItem().toString());
                     Calendar calendarToSend = Calendar.getInstance();
 
-                    calendarToSend.set(y,m-1,d-1,h,min);
+                    calendarToSend.set(y,m-1,d,h,min);
                     intent.putExtra("KEY_EVENT_NAME_"+NumberOfSelectedEvents, "D & T");
                     intent.putExtra("YEAR",calendarToSend.get(Calendar.YEAR));
                     intent.putExtra("MONTH",calendarToSend.get(Calendar.MONTH));
@@ -210,7 +210,7 @@ public class IfSelectionActivity extends AppCompatActivity {
                     }
                     for (int i = 0; i <= 12; i++) {
                         if (i == 0) {
-                            month[i] = Integer.toString(current_month);
+                            month[i] = Integer.toString(current_month+1);
                             continue;
                         }
                         month[i] = Integer.toString(i);

@@ -107,6 +107,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
+        if(id == R.id.nav_my_events_id){
+            Intent intent = new Intent(this, MyRecipes.class);
+            startActivity(intent);
+        }
+
         /*if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {

@@ -44,6 +44,20 @@ public class ThenSelectionActivity extends AppCompatActivity {
                 intent.putExtra("FROM_WHICH", "ThenSelectionActivity");
 
 
+                View view2 = getViewByPosition(1,listViewForThenSelection);
+                CheckBox checkBox2 = view2.findViewById(R.id.checkBox_post_http);
+                if(checkBox2.isChecked()){
+                    NumberOfSelectedServices++;
+                    CheckBox checkBox = view2.findViewById(R.id.checkBox_to_send_call_logs);
+                    intent.putExtra("SEND_CALL_LOGS_?",checkBox.isChecked());
+                    EditText editText = view2.findViewById(R.id.input_server_address);
+                    intent.putExtra("SERVER_ADDRESS",editText.getText().toString());
+                    editText = view2.findViewById(R.id.input_text_message_to_post);
+                    intent.putExtra("MESSAGE_TO_POST_ON_SERVER",editText.getText().toString());
+
+                    intent.putExtra("KEY_SERVICE_NAME_"+NumberOfSelectedServices,"H Post");
+                }
+
                 View view1 = getViewByPosition(0,listViewForThenSelection);
                 CheckBox checkBox1 = view1.findViewById(R.id.checkBox_alarm_notify);
                 if(checkBox1.isChecked()){
@@ -52,18 +66,6 @@ public class ThenSelectionActivity extends AppCompatActivity {
                     intent.putExtra("ALARM_MESSAGE",editText.getText().toString());
                     intent.putExtra("KEY_SERVICE_NAME_"+NumberOfSelectedServices, "Alarm");
 
-                }
-                View view2 = getViewByPosition(1,listViewForThenSelection);
-                CheckBox checkBox2 = view2.findViewById(R.id.checkBox_post_http);
-                if(checkBox2.isChecked()){
-                    CheckBox checkBox = view2.findViewById(R.id.checkBox_to_send_call_logs);
-                    intent.putExtra("SEND_CALL_LOGS_?",checkBox.isChecked());
-                    EditText editText = view2.findViewById(R.id.input_server_address);
-                    intent.putExtra("SERVER_ADDRESS",editText.getText().toString());
-                    editText = view2.findViewById(R.id.input_text_message_to_post);
-                    intent.putExtra("MESSAGE_TO_POST_ON_SERVER",editText.getText().toString());
-                    NumberOfSelectedServices++;
-                    intent.putExtra("KEY_SERVICE_NAME_"+NumberOfSelectedServices,"H Post");
                 }
                 View view3 = getViewByPosition(2,listViewForThenSelection);
                 CheckBox checkBox3 = view3.findViewById(R.id.checkBox_battery_power);
@@ -77,8 +79,10 @@ public class ThenSelectionActivity extends AppCompatActivity {
                 }
 
 
-                intent.putExtra("NUMBER_OF_SERVICES",NumberOfSelectedServices);
 
+
+                intent.putExtra("NUMBER_OF_SERVICES",NumberOfSelectedServices);
+                Log.d("hello then", "onClick: "+NumberOfSelectedServices);
                 startActivity(intent);
             }
         });

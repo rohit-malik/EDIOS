@@ -44,8 +44,8 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
     int count_then_selection = 0;
     ListView ListView_If_Selected;
     ListView ListView_Then_Selected;
-    List<String> IF_LIST = new ArrayList<String>();
-    List<String> THEN_LIST = new ArrayList<String>();
+    List<String> IF_LIST = new ArrayList<>();
+    List<String> THEN_LIST = new ArrayList<>();
     SQLiteDatabase database;
     DatabaseHelper databaseHelper;
     Context context;
@@ -73,7 +73,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Menu menuNav = navigationView.getMenu();
-        MenuItem create_event_item = menuNav.findItem(R.id.nav_create_event_id);
+        MenuItem create_event_item = menuNav.findItem(R.id.nav_create_event_id1);
         create_event_item.setChecked(true);
 
         final SharedPreferences sharedPreferences = getSharedPreferences("DATA_CREATE_EVENT",Context.MODE_PRIVATE);
@@ -154,6 +154,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 
                         //Recipe Insertion
                         ContentValues r_contentValues = new ContentValues();
+                        Log.e("Hello ", "onClick: "+THEN_LIST.toString() );
                         r_contentValues.put("event_list",IF_LIST.toString());
                         r_contentValues.put("service_list",THEN_LIST.toString());
                         //long result = 0
@@ -184,7 +185,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                             if (IF_LIST.get(i).equals("D & T")) {
                                 //Insert data
                                 Calendar c = Calendar.getInstance();
-                                c.set(y,m,d,h,min);
+                                c.set(y,m,d,h,min,0);
                                 long cc = c.getTimeInMillis();
                                 String datetime = String.valueOf(cc);
                                 ContentValues contentValues = new ContentValues();
@@ -414,6 +415,9 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                 }
                 ((CustomAdapterForThenSelected) ListView_Then_Selected.getAdapter()).notifyDataSetChanged();
 
+                Log.d("Hello wer", "onCreate: "+THEN_LIST.toString());
+                Log.d("HELLO xyz", "onCreate: "+count_then_selection);
+
                 save_state();
 
                 for (int i = 1; i <= number_of_services_received; i++) {
@@ -480,6 +484,11 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        if(id == R.id.nav_create_event_id1){
+            Intent intent = new Intent(this,MyRecipes.class);
+            startActivity(intent);
+        }
 
         /*if (id == R.id.nav_camera) {
             // Handle the camera action

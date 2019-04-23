@@ -5,12 +5,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecipes extends AppCompatActivity {
@@ -18,8 +22,9 @@ public class MyRecipes extends AppCompatActivity {
     int NumberOfTotalMyReceipies = 0;
     ListView listViewForMyReceipies;
     DatabaseHelper databaseHelper;
-    List<String> IF_LIST;
-    List<String> THEN_LIST;
+    List<String> IF_LIST = new ArrayList<>();
+    List<String> THEN_LIST = new ArrayList<>();
+    List<Integer> RECIPE_ID_LIST = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +34,11 @@ public class MyRecipes extends AppCompatActivity {
         CustomAdapterForMyReceipies customAdapterForMyReceipies = new CustomAdapterForMyReceipies();
         listViewForMyReceipies.setAdapter(customAdapterForMyReceipies);
 
-        //reset the listView from dataBase
+
 
         databaseHelper = DatabaseHelper.getInstance(this);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         Cursor r_cursor = db.rawQuery("select count(recipe_id) from recipe",null);
-        //String books = "";
         if (r_cursor.moveToFirst()){
             do {
                 // Passing values
@@ -44,37 +48,24 @@ public class MyRecipes extends AppCompatActivity {
         }
         r_cursor.close();
         Cursor r_cursor2 = db.rawQuery("select * from recipe",null);
-        //String books = "";
         if (r_cursor2.moveToFirst()){
             do {
                 // Passing values
                 int recipe_id = r_cursor2.getInt(0);
                 String event_list = r_cursor2.getString(1);
                 String service_list = r_cursor2.getString(2);
-                // Do something Here with values
 
-                
-
+                RECIPE_ID_LIST.add(recipe_id);
+                IF_LIST.add(event_list);
+                THEN_LIST.add(service_list);
             } while(r_cursor2.moveToNext());
         }
         r_cursor2.close();
-        Intent intent = getIntent();
 
 
 
-        if(intent.getStringExtra("FROM_WHICH").equals("CreateEventActivity")){
-            NumberOfTotalMyReceipies++;
-
-            String IF_LIST = intent.getStringExtra("IF_LIST");
-            String THEN_LIST = intent.getStringExtra("THEN_LIST");
 
 
-            //save this recipe in database
-            //reset the list view
-
-            ((CustomAdapterForMyReceipies) listViewForMyReceipies.getAdapter()).notifyDataSetChanged();
-
-        }
 
 
         Button done_button = findViewById(R.id.done_btn_in_my_receipies);
@@ -114,32 +105,51 @@ public class MyRecipes extends AppCompatActivity {
 
             view = getLayoutInflater().inflate(R.layout.row_layout_recipe_all,null);
 
+            TextView textView = view.findViewById(R.id.recipe_name);
+            textView.setText("Recipe "+i);
+
+            textView = view.findViewById(R.id.if_list_here);
+            textView.setText(IF_LIST.get(i));
+
+            textView = view.findViewById(R.id.then_list_here);
+            textView.setText(THEN_LIST.get(i));
+
+            final int x = RECIPE_ID_LIST.get(i);
+            ImageView delete_btn = view.findViewById(R.id.delete_recipe);
+            delete_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    databaseHelper = DatabaseHelper.getInstance(MyRecipes.this);
+                    SQLiteDatabase db = databaseHelper.getWritableDatabase();
+                    String[] params = new String[]{ String.valueOf(x) };
+                    int result = db.delete("recipe","recipe_id = ?", params);
+                    int result2 = db.delete("events","event_id = ?", params);
+                    int result3 = db.delete("services","service_id = ?", params);
+                    Log.d("printlist","" + IF_LIST.toString());
+                    Log.d("list", "onClick: outsite delete" + IF_LIST.contains("[M Call]"));
+                    //Stoping Missed Call Service
+                    if(IF_LIST.contains("[M Call]")) {
+                        Intent backgroundService = new Intent(getApplicationContext(), MissedCallBackgroundService.class);
+                        stopService(backgroundService);
+                        Log.d("Service", "Service Stopped");
+                    }
+                    Intent intent = new Intent(MyRecipes.this,MyRecipes.class);
+                    startActivity(intent);
+                }
+
+            });
+
+
+
             return view;
 
         }
 
-        @Override
-        public void notifyDataSetChanged() {
-            super.notifyDataSetChanged();
-        }
-    }
 
-    public View getViewByPosition(int pos, ListView listView) {
-        final int firstListItemPosition = listView.getFirstVisiblePosition();
-        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
-        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
-            return listView.getAdapter().getView(pos, null, listView);
-        } else {
-            final int childIndex = pos - firstListItemPosition;
-            return listView.getChildAt(childIndex);
-        }
     }
 
 
-    public void delete_recipe_button(View view){
 
 
-        ((CreateEventActivity.CustomAdapterForIfSelected) listViewForMyReceipies.getAdapter()).notifyDataSetChanged();
-        //save_state();
-    }
+
 }
