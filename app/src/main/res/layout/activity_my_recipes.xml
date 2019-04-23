@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,8 +9,11 @@
 
     <ListView
         android:id="@+id/list_view_for_my_receipies"
-        android:layout_width="395dp"
-        android:layout_height="577dp"
+        android:layout_width="399dp"
+        android:layout_height="639dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +24,11 @@
         android:id="@+id/done_btn_in_my_receipies"
         android:layout_width="109dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="136dp"
+        android:layout_marginBottom="20dp"
+        android:paddingBottom="@dimen/margin_10dp"
         android:background="@drawable/rounded_corner"
         android:text="@string/done"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,4 +37,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.989" />
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
