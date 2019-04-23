@@ -6,4 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".MyRecipes">
 
+    <ListView
+        android:id="@+id/list_view_for_my_receipies"
+        android:layout_width="395dp"
+        android:layout_height="577dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.577" />
+
+    <Button
+        android:id="@+id/done_btn_in_my_receipies"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner"
+        android:text="@string/done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.989" />
 </android.support.constraint.ConstraintLayout>

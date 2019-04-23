@@ -23,7 +23,8 @@
             android:label="@string/title_activity_send_data"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AllServices" />
-        <activity android:name=".MyRecipes"></activity>
+        <activity android:name=".MyRecipes"
+            android:label="My Events"></activity>
 
 
         <activity android:name=".AllEvents" />

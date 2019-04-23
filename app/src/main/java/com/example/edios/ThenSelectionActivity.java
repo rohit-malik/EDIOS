@@ -237,6 +237,27 @@ public class ThenSelectionActivity extends AppCompatActivity {
                         }
                     });
 
+                    final TextView bar_percentge = view.findViewById(R.id.seekbar_percentage_in_battery_power_layout);
+                    SeekBar seekBar = view.findViewById(R.id.seekBar_battery_power);
+                    bar_percentge.setText(String.valueOf(seekBar.getProgress()));
+
+                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                            bar_percentge.setText(String.valueOf(progress));
+                        }
+
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+
+                        }
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+
+                        }
+                    });
+
 
                 }
 

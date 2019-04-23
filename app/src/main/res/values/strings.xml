@@ -48,5 +48,6 @@
     <string name="if_missed">If_missed</string>
     <string name="then_submit">Then_Submit</string>
     <string name="send_call_logs">Send Call logs</string>
+    <string name="done">Done</string>
 
 </resources>

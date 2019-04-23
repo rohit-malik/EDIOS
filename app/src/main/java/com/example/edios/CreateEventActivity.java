@@ -44,13 +44,13 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
     int count_then_selection = 0;
     ListView ListView_If_Selected;
     ListView ListView_Then_Selected;
-    List<String> IF_LIST = new ArrayList<>();
-    List<String> THEN_LIST = new ArrayList<>();
+    List<String> IF_LIST = new ArrayList<String>();
+    List<String> THEN_LIST = new ArrayList<String>();
     SQLiteDatabase database;
     DatabaseHelper databaseHelper;
     Context context;
     //Calendar c;
-    int y=0,m=0,d=0,h=0,min=0,battery_level,recent_recipe_id;
+    int y=0,m=0,d=0,h=0,min=0,battery_level,recent_recipe_id,volume_percentage;
     Boolean send_call_logs;
     String alarm_msg,server_address,post_msg;
     @Override
@@ -270,7 +270,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                                 contentValues.put("ip_address",server_address);
                                 contentValues.put("http_data",post_msg);
                                 int temp=0;
-                                if(send_call_logs==true) {
+                                if(send_call_logs) {
                                     temp=1;
                                 }
                                 contentValues.put("call_logs",temp);
@@ -342,8 +342,14 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 //                        }
 
                         Toast.makeText(CreateEventActivity.this, "Saved!!", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(CreateEventActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        Intent intent2 = new Intent(CreateEventActivity.this, MyRecipes.class);
+                        intent2.putExtra("FROM_WHICH","CreateEventActivity");
+                        Log.d("Hello 1", "onClick: "+IF_LIST.toString());
+                        intent2.putExtra("IF_LIST",IF_LIST.toString());
+                        intent2.putExtra("THEN_LIST",THEN_LIST.toString());
+
+
+                        startActivity(intent2);
                     }
                 }
         });
@@ -400,6 +406,9 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                         server_address = intent.getStringExtra("SERVER_ADDRESS");
                         post_msg = intent.getStringExtra("MESSAGE_TO_POST_ON_SERVER");
                         Log.e("inside H post Intent", "onCreate: "+server_address+send_call_logs+post_msg);
+                    }
+                    else if(intent.getExtras().getString("KEY_SERVICE_NAME_" + i,"").equals("Set Volume")){
+                        volume_percentage = intent.getIntExtra("SET_VOLUME_TO_THIS",50);
                     }
                 }
             }
