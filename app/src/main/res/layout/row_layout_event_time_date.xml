@@ -38,7 +38,7 @@
 
     <Spinner
         android:id="@+id/spinner_day"
-        android:layout_width="55dp"
+        android:layout_width="wrap_content"
         android:layout_height="44dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,29 +50,27 @@
 
     <Spinner
         android:id="@+id/spinner_month"
-        android:layout_width="55dp"
+        android:layout_width="wrap_content"
         android:layout_height="44dp"
+        android:layout_marginStart="92dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.264"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintVertical_bias="0.055" />
 
     <Spinner
         android:id="@+id/spinner_year"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="44dp"
+        android:layout_marginStart="176dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintVertical_bias="0.053" />
 
     <Spinner
         android:id="@+id/spinner_hour"
-        android:layout_width="55dp"
+        android:layout_width="wrap_content"
         android:layout_height="44dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,15 +81,13 @@
 
     <Spinner
         android:id="@+id/spinner_minute"
-        android:layout_width="55dp"
+        android:layout_width="wrap_content"
         android:layout_height="44dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="92dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.248"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_month"
-        app:layout_constraintVertical_bias="0.06" />
+        app:layout_constraintVertical_bias="0.061" />
 
     <ImageButton
         android:id="@+id/description_time_date"
