@@ -4,10 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -117,7 +114,7 @@ public class MainActivity extends AppCompatActivity
     public void addListenerOnButtons(){
 
         final Context context = this;
-
+//
         Button checkAlarm = findViewById(R.id.checkAlarmButton);
         checkAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,14 +125,14 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-//        Button sendData = findViewById(R.id.http);
-//        sendData.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, SendData.class);
-//                startActivity(intent);
-//            }
-//        });
+        Button sendData = findViewById(R.id.http);
+        sendData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RecipeExecution.class);
+                startActivity(intent);
+            }
+        });
 
         ImageButton Add_New_Events = findViewById(R.id.add_new_events_in_content_main);
         Add_New_Events.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +142,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
 
 
 //

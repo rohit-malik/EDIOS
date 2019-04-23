@@ -3,10 +3,13 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.edios">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,15 +17,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyRecipes"></activity>
-
-
+        <activity android:name=".RecipeExecution"></activity>
         <activity
             android:name=".SendData"
             android:label="@string/title_activity_send_data"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AllServices" />
+        <activity android:name=".MyRecipes"></activity>
 
-        <activity android:name=".AllServices"></activity>
+
         <activity android:name=".AllEvents" />
         <activity
             android:name=".ThenSelectionActivity"
@@ -56,6 +59,11 @@
         <service android:name=".ScheduleService" />
         <service android:name=".NotifyService" />
         <service android:name=".RingtoneLevelService" />
+        <service android:name=".MissedCallBackgroundService"/>
+        <service android:name=".AlarmService" />
+        <service android:name=".SendDataService" />
+
+        <receiver android:name=".AlarmBroadcastReceiver" />
     </application>
 
 </manifest>

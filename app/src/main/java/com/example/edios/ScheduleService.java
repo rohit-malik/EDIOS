@@ -41,7 +41,18 @@ public class ScheduleService extends Service {
     public void setAlarm(Calendar c) {
         // This starts a new thread to set the alarm
         // You want to push off your tasks onto a new thread to free up the UI to carry on responding
+        Log.e("Inside Service", "ExecuteServices: " );
+
         new AlarmTask(this, c).run();
+    }
+
+
+
+
+
+
+    public void setRingtone(Calendar c){
+        new RingtoneLevelTask(this,c).run();
     }
 
 }

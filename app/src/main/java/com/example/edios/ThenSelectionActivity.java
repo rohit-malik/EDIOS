@@ -2,8 +2,8 @@ package com.example.edios;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -17,10 +17,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.util.Calendar;
 
 
 public class ThenSelectionActivity extends AppCompatActivity {
@@ -51,16 +48,22 @@ public class ThenSelectionActivity extends AppCompatActivity {
                 CheckBox checkBox1 = view1.findViewById(R.id.checkBox_alarm_notify);
                 if(checkBox1.isChecked()){
                     NumberOfSelectedServices++;
-
+                    EditText editText = view1.findViewById(R.id.input_alarm_message);
+                    intent.putExtra("ALARM_MESSAGE",editText.getText().toString());
                     intent.putExtra("KEY_SERVICE_NAME_"+NumberOfSelectedServices, "Alarm");
 
                 }
                 View view2 = getViewByPosition(1,listViewForThenSelection);
                 CheckBox checkBox2 = view2.findViewById(R.id.checkBox_post_http);
                 if(checkBox2.isChecked()){
+                    CheckBox checkBox = view2.findViewById(R.id.checkBox_to_send_call_logs);
+                    intent.putExtra("SEND_CALL_LOGS_?",checkBox.isChecked());
+                    EditText editText = view2.findViewById(R.id.input_server_address);
+                    intent.putExtra("SERVER_ADDRESS",editText.getText().toString());
+                    editText = view2.findViewById(R.id.input_text_message_to_post);
+                    intent.putExtra("MESSAGE_TO_POST_ON_SERVER",editText.getText().toString());
                     NumberOfSelectedServices++;
                     intent.putExtra("KEY_SERVICE_NAME_"+NumberOfSelectedServices,"H Post");
-
                 }
                 View view3 = getViewByPosition(2,listViewForThenSelection);
                 CheckBox checkBox3 = view3.findViewById(R.id.checkBox_battery_power);
