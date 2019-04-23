@@ -25,7 +25,7 @@ import java.util.Calendar;
 
 public class ThenSelectionActivity extends AppCompatActivity {
 
-    int NumberOfTotalServices = 2;
+    int NumberOfTotalServices = 3;
     ListView listViewForThenSelection;
 
     @Override
@@ -62,6 +62,16 @@ public class ThenSelectionActivity extends AppCompatActivity {
                     intent.putExtra("KEY_SERVICE_NAME_"+NumberOfSelectedServices,"H Post");
 
                 }
+                View view3 = getViewByPosition(2,listViewForThenSelection);
+                CheckBox checkBox3 = view3.findViewById(R.id.checkBox_battery_power);
+                if(checkBox3.isChecked()){
+                    NumberOfSelectedServices++;
+                    intent.putExtra("KEY_SERVICE_NAME_"+NumberOfSelectedServices,"Set Volume");
+
+                    SeekBar seekBar = view3.findViewById(R.id.seekBar_battery_power);
+                    int progress = seekBar.getProgress();
+                    intent.putExtra("SET_VOLUME_TO_THIS",progress);
+                }
 
 
                 intent.putExtra("NUMBER_OF_SERVICES",NumberOfSelectedServices);
@@ -79,7 +89,7 @@ public class ThenSelectionActivity extends AppCompatActivity {
 
         @Override
         public int getViewTypeCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -189,6 +199,41 @@ public class ThenSelectionActivity extends AppCompatActivity {
 
                         }
                     });
+
+                }
+                else if(type == 2){
+                    view = getLayoutInflater().inflate(R.layout.row_layout_event_battery_power,null);
+
+                    TextView textView = view.findViewById(R.id.textView_battery_power);
+                    textView.setText(R.string.ringtone_volume);
+
+                    ImageButton description = view.findViewById(R.id.description_battery_power);
+                    description.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            final Dialog dialog = new Dialog(ThenSelectionActivity.this,android.R.style.Theme_Translucent_NoTitleBar);
+                            dialog.setContentView(R.layout.description_dialog);
+                            Window window = dialog.getWindow();
+
+                            if (window != null) {
+                                window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                window.setGravity(Gravity.CENTER);
+                            }
+
+
+                            dialog.show();
+                            TextView txt_description = dialog.findViewById(R.id.txt_description_in_description_dialog);
+                            txt_description.setText(R.string.description_set_volume);
+                            dialog.findViewById(R.id.GotIt_btn_in_description_dialog).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                        }
+                    });
+
 
                 }
 

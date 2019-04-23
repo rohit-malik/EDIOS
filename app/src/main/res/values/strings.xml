@@ -33,9 +33,11 @@
     <string name="description_alarm">This is the description</string>
     <string name="description_battery_power">This is the description for battery power</string>
     <string name="description_post_http">This is the description</string>
+    <string name="description_set_volume">This is the description for setting ringtone volume</string>
     <string name="ok">Got it!</string>
     <string name="title_activity_alarm_testing">AlarmTestingActivity</string>
     <string name="battery_power">Battery Power</string>
+    <string name="ringtone_volume">Set Volume</string>
     <string name="alarm_notification">Alarm Notification</string>
     <string name="type_alarm_message">Type Alarm Message</string>
     <string name="server_address">Server Address</string>
