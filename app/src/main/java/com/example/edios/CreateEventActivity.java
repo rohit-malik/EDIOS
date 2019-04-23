@@ -89,6 +89,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         alarm_msg = sharedPreferences.getString("alarm_msg","null");
         server_address = sharedPreferences.getString("server_address","null");
         post_msg = sharedPreferences.getString("post_msg","null");
+        volume_percentage = sharedPreferences.getInt("volume_percentage",50);
 
         for(int i=0; i<count_if_selection; i++){
             IF_LIST.add(sharedPreferences.getString("IF_LIST_"+Integer.toString(i),""));
@@ -153,8 +154,8 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
 
                         //Recipe Insertion
                         ContentValues r_contentValues = new ContentValues();
-                        r_contentValues.put("event_list","null");
-                        r_contentValues.put("service_list","null");
+                        r_contentValues.put("event_list",IF_LIST.toString());
+                        r_contentValues.put("service_list",THEN_LIST.toString());
                         //long result = 0
                         long r_result = database.insert("recipe", null, r_contentValues);
                         if(r_result==-1){
@@ -300,6 +301,24 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
                                             Toast.LENGTH_LONG).show();
                                 }
                             }
+
+                            else if (THEN_LIST.get(i).equals("Set Volume")) {
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put("service_id",recent_recipe_id);
+                                contentValues.put("service_name","set_volume");
+                                Log.e("Before inserting", "onClick: All data is "+alarm_msg);
+                                contentValues.put("ringtone_level",volume_percentage);
+                                long result = database.insert("services", null, contentValues);
+                                if(result==-1){
+                                    Toast.makeText(CreateEventActivity.this, "Not Done",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    Toast.makeText(CreateEventActivity.this, "Data Inserted",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+
                         }
 
 //                        Intent if_intent = getIntent();
@@ -509,6 +528,7 @@ public class CreateEventActivity extends AppCompatActivity implements Navigation
         editor.putString("post_msg",post_msg);
         editor.putString("server_address",server_address);
         editor.putString("alarm_msg",alarm_msg);
+        editor.putInt("volume_percentage",volume_percentage);
         editor.apply();
 
     }

@@ -1,26 +1,23 @@
 package com.example.edios;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MyRecipes extends AppCompatActivity {
 
     int NumberOfTotalMyReceipies = 0;
     ListView listViewForMyReceipies;
-
+    DatabaseHelper databaseHelper;
     List<String> IF_LIST;
     List<String> THEN_LIST;
     @Override
@@ -34,7 +31,36 @@ public class MyRecipes extends AppCompatActivity {
 
         //reset the listView from dataBase
 
+        databaseHelper = DatabaseHelper.getInstance(this);
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        Cursor r_cursor = db.rawQuery("select count(recipe_id) from recipe",null);
+        //String books = "";
+        if (r_cursor.moveToFirst()){
+            do {
+                // Passing values
+                NumberOfTotalMyReceipies = r_cursor.getInt(0);
+                // Do something Here with values
+            } while(r_cursor.moveToNext());
+        }
+        r_cursor.close();
+        Cursor r_cursor2 = db.rawQuery("select * from recipe",null);
+        //String books = "";
+        if (r_cursor2.moveToFirst()){
+            do {
+                // Passing values
+                int recipe_id = r_cursor2.getInt(0);
+                String event_list = r_cursor2.getString(1);
+                String service_list = r_cursor2.getString(2);
+                // Do something Here with values
+
+                
+
+            } while(r_cursor2.moveToNext());
+        }
+        r_cursor2.close();
         Intent intent = getIntent();
+
+
 
         if(intent.getStringExtra("FROM_WHICH").equals("CreateEventActivity")){
             NumberOfTotalMyReceipies++;

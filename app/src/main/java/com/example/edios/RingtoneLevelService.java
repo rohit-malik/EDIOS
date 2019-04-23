@@ -21,6 +21,8 @@ public class RingtoneLevelService extends Service {
     /**
      * Class for clients to access
      */
+
+    Boolean aBoolean = false;
     public class ServiceBinder extends Binder {
         RingtoneLevelService getService() {
             return RingtoneLevelService.this;
@@ -43,13 +45,17 @@ public class RingtoneLevelService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("LocalService", "Received start id " + startId + ": " + intent);
+        aBoolean = intent.getBooleanExtra(INTENT_NOTIFY, false);
 
-        // If this service was started by out AlarmTask intent then we want to show our notification
-        if(intent.getBooleanExtra(INTENT_NOTIFY, false)) {
-            float volume = intent.getFloatExtra("volume_level",1);
-            //float volume = 1;
-            setRingtoneLevel(volume);
+        if (intent!=null) {
+            if(aBoolean) {
+                float volume = intent.getFloatExtra("volume_level",1);
+                //float volume = 1;
+                setRingtoneLevel(volume);
+            }
         }
+        // If this service was started by out AlarmTask intent then we want to show our notification
+
 
         // We don't care if this service is stopped as we have already delivered our notification
         return START_NOT_STICKY;
