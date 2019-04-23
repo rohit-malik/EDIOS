@@ -28,12 +28,12 @@
     <string name="time_date"><![CDATA[Time & Date]]></string>
     <string name="missed_calls">Missed Calls</string>
     <string name="proceed">Proceed</string>
-    <string name="description_missed_calls"><![CDATA[This is the description for the row Missed Calls in ifSelectionActivity This is the description for the row Missed Calls in ifSelectionActivity This is the description for the row Missed Calls in ifSelectionActivity]]></string>
-    <string name="description_date_time"><![CDATA[This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity This is the description for the row Date & Time in ifSelectionActivity]]></string>
-    <string name="description_alarm">This is the description</string>
+    <string name="description_missed_calls">This event when selected occurs if the user gets a missed call on his device.</string>
+    <string name="description_date_time">This event when selected occurs if the date and time equals the selected date and time.</string>
+    <string name="description_alarm">This service sets a notification along with an alarm when selected if conditions occur. It displays the notification message that is inserted.</string>
     <string name="description_battery_power">This is the description for battery power</string>
-    <string name="description_post_http">This is the description</string>
-    <string name="description_set_volume">This is the description for setting ringtone volume</string>
+    <string name="description_post_http">This service posts some data on a server with the inserted IP address and inserted text data. It also provides a service to upload call logs from the mobile phone of the user.</string>
+    <string name="description_set_volume">This service sets the ringtone volume level of the device.</string>
     <string name="ok">Got it!</string>
     <string name="title_activity_alarm_testing">AlarmTestingActivity</string>
     <string name="battery_power">Battery Power</string>
