@@ -36,6 +36,13 @@ public class AlarmService extends Service implements Serializable {
         //return super.onStartCommand(intent, flags, startId);
         date = (Calendar) intent.getSerializableExtra("calender");
         //service_name = (String) intent.getSerializableExtra("service_name");
+        Calendar c = Calendar.getInstance();
+        c.set(2019, Calendar.APRIL, 24);
+        c.set(Calendar.HOUR_OF_DAY,23);
+        c.set(Calendar.MINUTE, 17);
+
+        c.set(Calendar.SECOND, 0);
+        //date = c;
         String calender_time = String.valueOf(date.getTimeInMillis());
         Intent my_intent = new Intent(this, AlarmBroadcastReceiver.class);
         //my_intent.putExtra("service_name",service_name);
@@ -46,6 +53,7 @@ public class AlarmService extends Service implements Serializable {
         am.set(AlarmManager.RTC, date.getTimeInMillis(), pendingIntent);
         Log.d("after setting alarm","alarm set");
         Log.d("date time", String.valueOf(date.getTime()));
+        Log.d("date time in ms",String.valueOf(date.getTimeInMillis()));
         return START_NOT_STICKY;
     }
 }

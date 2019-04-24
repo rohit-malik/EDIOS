@@ -64,13 +64,15 @@ public class IfSelectionActivity extends AppCompatActivity {
                     int h = Integer.parseInt(spinner_hour.getSelectedItem().toString());
                     int min = Integer.parseInt(spinner_minute.getSelectedItem().toString());
                     Calendar calendarToSend = Calendar.getInstance();
+                    Log.d("inside if selection:",String.valueOf(h));
 
                     calendarToSend.set(y,m-1,d,h,min);
                     intent.putExtra("KEY_EVENT_NAME_"+NumberOfSelectedEvents, "D & T");
                     intent.putExtra("YEAR",calendarToSend.get(Calendar.YEAR));
                     intent.putExtra("MONTH",calendarToSend.get(Calendar.MONTH));
                     intent.putExtra("DAY",calendarToSend.get(Calendar.DAY_OF_MONTH));
-                    intent.putExtra("HOUR",calendarToSend.get(Calendar.HOUR));
+                    intent.putExtra("HOUR",calendarToSend.get(Calendar.HOUR_OF_DAY));
+                    Log.d("inside if selection:",String.valueOf(calendarToSend.get(Calendar.HOUR_OF_DAY)));
                     intent.putExtra("MINUTE",calendarToSend.get(Calendar.MINUTE));
 
                 }
